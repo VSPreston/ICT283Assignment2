@@ -27,7 +27,6 @@ std::string Time::GetFullTime() const {
 void Time::Sethour(unsigned hour) {
     if (hour > 23) {
         std::cerr << "Hour input wrong!";
-        exit(-1);
     }
     m_hour = hour;
 }
@@ -35,7 +34,6 @@ void Time::Sethour(unsigned hour) {
 void Time::Setminute(unsigned minute) {
     if (minute > 59) {
         std::cerr << "Minute input wrong!";
-        exit(-1);
     }
     m_minute = minute;
 }
