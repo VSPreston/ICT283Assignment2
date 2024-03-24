@@ -1,0 +1,7 @@
+<map id="Date::GetDate" name="Date::GetDate">
+<area shape="rect" id="Node000001" title="Getter function for the full date as a string." alt="" coords="138,31,242,57"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="23,5,72,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,35,72,26,73,20,123,29"/>
+<area shape="rect" id="Node000003" href="$_date_8cpp.html#a9da4b2fd0851ea11e0dc8431f3177630" title="Overloaded output stream insertion operator for the Date class." alt="" coords="5,56,90,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="123,59,90,64,90,59,122,53"/>
+</map>

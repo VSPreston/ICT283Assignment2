@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1709155876 source:c:\users\liang\desktop\school\trimester 2\ict283\ict283workshops\ict283_assignment1_wong_liang_jun_35059404\date.cpp
+	"Date.h"
+
+1709042898 c:\users\liang\desktop\school\trimester 2\ict283\ict283workshops\ict283_assignment1_wong_liang_jun_35059404\date.h
+	<iostream>
+	<string>
+
+1709069425 source:c:\users\liang\desktop\school\trimester 2\ict283\ict283workshops\ict283_assignment1_wong_liang_jun_35059404\time.cpp
+	"Time.h"
+
+1709145966 c:\users\liang\desktop\school\trimester 2\ict283\ict283workshops\ict283_assignment1_wong_liang_jun_35059404\time.h
+	<iostream>
+	<iomanip>
+	<sstream>
+	<string>
+
+1709283007 source:c:\users\liang\desktop\school\trimester 2\ict283\ict283workshops\ict283_assignment1_wong_liang_jun_35059404\main.cpp
+	"Date.h"
+	"Time.h"
+	"Vector.h"
+	<fstream>
+	<sstream>
+	<iostream>
+	<cmath>
+
+1709271096 c:\users\liang\desktop\school\trimester 2\ict283\ict283workshops\ict283_assignment1_wong_liang_jun_35059404\vector.h
+

@@ -1,0 +1,16 @@
+<map id="Vector::Size" name="Vector::Size">
+<area shape="rect" id="Node000001" title="Get the current size of the vector." alt="" coords="214,81,307,108"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a5e84098471d24c079bfc689c0c9533a1" title=" " alt="" coords="103,5,166,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,75,157,35,160,30,225,70"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#ab1ff52a8adfaa2656ed9d7170d1815c6" title=" " alt="" coords="103,56,166,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="198,85,166,78,167,73,199,80"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#a7867519d8e778ebe57d37ccc31411d72" title=" " alt="" coords="103,107,166,133"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="199,110,167,116,166,111,198,104"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a61f46c0fac103196bb0b61f50706dc0b" title=" " alt="" coords="103,157,166,184"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="225,119,160,159,157,155,222,114"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,81,55,108"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,44,51,83,48,79,101,40"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="89,83,56,91,54,86,87,78"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="87,111,54,103,56,98,89,106"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="101,150,48,111,51,106,104,145"/>
+</map>

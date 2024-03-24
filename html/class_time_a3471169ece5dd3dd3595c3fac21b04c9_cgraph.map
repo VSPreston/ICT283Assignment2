@@ -1,0 +1,5 @@
+<map id="Time::FormatMinutes" name="Time::FormatMinutes">
+<area shape="rect" id="Node000001" title="Formats the minutes to a 2 digit string for display." alt="" coords="5,5,150,32"/>
+<area shape="rect" id="Node000002" href="$class_vector.html#a39d6069675db4ecfc1ab81d440da759a" title="Default constructor." alt="" coords="198,5,303,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,16,182,16,182,21,150,21"/>
+</map>
