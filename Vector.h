@@ -29,13 +29,7 @@ class Vector {
          * @param newCapacity The new capacity of the array.
          */
         void ReAlloc(int newCapacity);
-        
-        /**
-         * @brief Copy constructor
-         * @param rhs 
-         * @return true if rhs has a value
-        */ 
-        bool Copy(const T& rhs);
+
 
     public:
         /**
@@ -301,12 +295,16 @@ void Vector<T>::Clear() { //clears the entire array.
 template <class T>
 const Vector<T>& Vector<T>::operator = (const Vector<T>& input) {
 
-    if (this != input) {
-        delete[] m_array;
-        m_size = input.m_size;
-        m_capacity = input.m_capacity;
-        m_array = new T[m_size];
-        Copy(input);
+    if (this != &input) {
+       if (input.m_array != nullptr) {
+            delete[] m_array;
+            m_size = input.m_size;
+            m_capacity = input.m_capacity;
+            m_array = new T[m_size];
+            for (int i =0; i<m_size ; i++) {
+                m_array[i] = input.m_array[i];
+            }
+        }
     }    
     return *this;
 }
@@ -329,15 +327,4 @@ T* Vector<T>::Data() {
 template <class T>
 const T* Vector<T>::Data() const {
     return m_array;
-}
-
-template <class T>
-bool Vector<T>::Copy(const T& rhs) {
-    if (rhs.m_array != nullptr) {
-        m_array = rhs.m_array;
-        return true;
-    } else {
-        return false;
-    }
-
 }
