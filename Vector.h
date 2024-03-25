@@ -124,7 +124,7 @@ class Vector {
          * @param input The vector to copy from.
          * @return A reference to this vector.
          */
-        const Vector<T>& operator = (const Vector<T>& input);
+        Vector<T>& operator = (const Vector<T>& input);
 
         /**
          * @brief Overloaded access operator.
@@ -293,7 +293,7 @@ void Vector<T>::Clear() { //clears the entire array.
 }
 
 template <class T>
-const Vector<T>& Vector<T>::operator = (const Vector<T>& input) {
+Vector<T>& Vector<T>::operator = (const Vector<T>& input) {
 
     if (this != &input) {
        if (input.m_array != nullptr) {
