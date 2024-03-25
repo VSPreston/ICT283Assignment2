@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 // Compiler command:
 // g++ -Wall -g -std=c++11 -ftime-report main.cpp Time.cpp Date.cpp -o main
@@ -22,7 +23,6 @@ typedef struct {
 typedef Vector<RecType> LogType; 
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
-std::string RetrieveFilename(std::string filename);
 void option1(LogType& inputdata);
 void option2(LogType& inputdata);
 void option3(LogType& inputdata);
@@ -31,27 +31,48 @@ void option4(LogType& inputdata);
 void menu();
 
 int main() {
+    std::string filename;
+    LogType wind_data = LogType(5);
+    std::ifstream inputFile("data/data_source.txt");
 
-    std::ifstream infile(RetrieveFilename("data/data_source.txt"));
-    if( !infile ) {
-        std::cerr << " Cannot find file!" << std::endl;
-        return 1;
-    }
+    while (std::getline(inputFile, filename)) {
+        filename = "data/" + filename;
+        std::ifstream infile(filename);
+        // std::cout << filename << std::endl;
+        if (!infile) {
+            std::cerr << "Cannot open file: " << filename << std::endl;
+            continue; // Move to the next file
+        }
 
-    //next: finding where to get WAST and R
+        std::cout << "Processing file: " << filename << std::endl;
+        int wastpostion = -1;
+        int speedpostion = -1;
+        int solarradposition = -1;
+        int airtempposition = -1;
+        int counter = 0;
+        std::string header;
+        std::string headerline;
 
-    int wastpostion = -1;
-    int speedpostion = -1;
-    int solarradposition = -1;
-    int airtempposition = -1;
-    int counter = 0;
-    std::string header;
-    std::string headerline;
-
-    if (std::getline(infile, headerline)) {
-        for (char c : headerline) {
-            if (c == ',') {
-                // If a comma is encountered, check if the headerName matches "WAST" or "S"
+        if (std::getline(infile, headerline)) {
+            for (char c : headerline) {
+                if (c == ',') {
+                    // If a comma is encountered, check if the headerName matches "WAST" or "S"
+                    if (header == "WAST") {
+                        wastpostion = counter;
+                    } else if (header == "S") {
+                        speedpostion = counter;
+                    } else if (header == "T") {
+                        airtempposition = counter;
+                    } else if (header == "SR") {
+                        solarradposition = counter;
+                    } 
+                    header.clear(); // Clear the headerName for the next cell
+                    counter++; // Move to the next column
+                } else {
+                    header += c; // Append the character to the headerName
+                }
+            }
+            if (!header.empty()) {
                 if (header == "WAST") {
                     wastpostion = counter;
                 } else if (header == "S") {
@@ -61,89 +82,77 @@ int main() {
                 } else if (header == "SR") {
                     solarradposition = counter;
                 }
-                header.clear(); // Clear the headerName for the next cell
-                counter++; // Move to the next column
+            }
+        }
+
+        // std::cout << "WAST index position:" << wastpostion << '\n' 
+        // << "S index position::" << speedpostion << '\n'
+        // << "SR (Solar Radiation) index position: " << solarradposition << '\n'
+        // <<  "Air temperature index position: " << airtempposition << std::endl; 
+
+        if (wastpostion == -1 || speedpostion == -1 || airtempposition == -1 || solarradposition == -1) {
+            std::cerr << "One of the data types not found in file!" << std::endl;
+            exit (-1);
+        }
+
+        // next: putting data into wind_data
+
+        std::string line;
+        int index = 0;
+        while (std::getline(infile, line)) {
+            std::string dataline;
+            int columncount = 0;
+            std::istringstream iss(line);
+            Date tempdate;
+            Time temptime;
+            float tempspeed =0;
+            float tempsr = 0;
+            float tempairt = 0;
+            RecType tempwrt;
+
+            while (std::getline(iss, dataline, ',')) {
+                if (dataline == "N/A" || dataline == "") {
+                    break;
+                }
+                if (columncount == wastpostion) {
+                    std::istringstream thing(dataline);
+                    thing >> tempdate
+                    >> temptime;
+                } else if (columncount == speedpostion && dataline != "") {
+                    tempspeed = stof(dataline);
+                } else if (columncount == solarradposition && dataline != "") {
+                    tempsr = stof(dataline);
+                } else if (columncount == airtempposition && dataline != "") {
+                    tempairt = stof(dataline);
+                } else  {}
+                columncount++;
+            }
+            if (tempdate.GetDate() == "No Date" || dataline == "N/A") { // checks for blank rows
+                continue;
             } else {
-                header += c; // Append the character to the headerName
-            }
+                tempwrt.d = tempdate;
+                tempwrt.t = temptime;
+                tempwrt.speed = tempspeed;
+                tempwrt.airtemp = tempairt;
+                tempwrt.solarrad = tempsr;
+                wind_data.Add(tempwrt);
+                index++;
+            }     
         }
-        if (!header.empty()) {
-            if (header == "WAST") {
-                wastpostion = counter;
-            } else if (header == "S") {
-                speedpostion = counter;
-            } else if (header == "T") {
-                airtempposition = counter;
-            } else if (header == "SR") {
-                solarradposition = counter;
-            }
-        }
-    }
-
-    // std::cout << "WAST index position:" << wastpostion << '\n' 
-    // << "S index position::" << speedpostion << '\n'
-    // << "SR (Solar Radiation) index position: " << solarradposition << '\n'
-    // <<  "Air temperature index position: " << airtempposition << std::endl; 
-
-    if (wastpostion == -1 || speedpostion == -1 || airtempposition == -1 || solarradposition == -1) {
-        std::cerr << "One of the data types not found in file!" << std::endl;
-        exit (-1);
-    }
-
-    // next: putting data into wind_data
-
-    LogType wind_data = LogType(5);
-    std::string line;
-    int index = 0;
-    while (std::getline(infile, line)) {
-        std::string dataline;
-        int columncount = 0;
-        std::istringstream iss(line);
-        Date tempdate;
-        Time temptime;
-        float tempspeed =0;
-        float tempsr = 0;
-        float tempairt = 0;
-        RecType tempwrt;
-
-        while (std::getline(iss, dataline, ',')) {
-            if (columncount == wastpostion) {
-                std::istringstream thing(dataline);
-                thing >> tempdate
-                 >> temptime;
-            } else if (columncount == speedpostion && dataline != "") {
-                tempspeed = stof(dataline);
-            } else if (columncount == solarradposition && dataline != "") {
-                tempsr = stof(dataline);
-            } else if (columncount == airtempposition && dataline != "") {
-                tempairt = stof(dataline);
-            } else {}
-            columncount++;
-        }
-        if (tempdate.GetDate() == "No Date") { // checks for blank rows
-            continue;
-        }  else {
-            tempwrt.d = tempdate;
-            tempwrt.t = temptime;
-            tempwrt.speed = tempspeed;
-            tempwrt.airtemp = tempairt;
-            tempwrt.solarrad = tempsr;
-            wind_data.Add(tempwrt);
-            index++;
-        }     
-
-    }
     
-    // for (int i = 0; i < wind_data.Size(); i++)
-    // {
-    //     std::cout << "Date: " << wind_data.getat(i).d.GetDate() << '\n'
-    //     << "Time: " <<wind_data.getat(i).t.GetFullTime() << '\n' 
-    //     << "Speed: " <<wind_data.getat(i).speed << '\n'
-    //     << "Ambient Air temperature: " << wind_data.getat(i).airtemp << '\n'
-    //     << "Solar Radiation: " << wind_data.getat(i).solarrad << '\n' << std::endl;
-    // }
+        // for (int i = 0; i < wind_data.Size(); i++)
+        // {
+        //     std::cout << "Date: " << wind_data.getat(i).d.GetDate() << '\n'
+        //     << "Time: " <<wind_data.getat(i).t.GetFullTime() << '\n' 
+        //     << "Speed: " <<wind_data.getat(i).speed << '\n'
+        //     << "Ambient Air temperature: " << wind_data.getat(i).airtemp << '\n'
+        //     << "Solar Radiation: " << wind_data.getat(i).solarrad << '\n' << std::endl;
+        // }
 
-    infile.close();
+        infile.close(); // Close the file after processing
+    }
+
+    //next: finding where to get WAST and R
 
     //DisplaySameasAverage(wind_data,average);
 
@@ -204,17 +213,6 @@ float CalculateSD(const Vector<float>& array, int size) {
     }
     
     return sqrt (sd/(size-1));
-}
-
-std::string RetrieveFilename(std::string filename) {
-    std::ifstream infile(filename);
-    if( !infile ) {
-        std::cerr << " Cannot find file!" << std::endl;
-        exit(-1);
-    }
-    std::string returnname;
-    std::getline(infile,returnname);
-    return "data/" +returnname;
 }
 
 void menu() {
