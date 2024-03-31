@@ -69,28 +69,28 @@ void Date::SetDate(std::string& fulldate) {
     m_FullDate = fulldate;
 }
 
-bool Date::operator>(const Date &other) const {
-    if (m_year > other.m_year)
+bool operator>(const Date &lhs,const Date &rhs) {
+    if (lhs.GetYear() > rhs.GetYear())
         return true;
-    else if (m_year < other.m_year)
+    else if (lhs.GetYear() < rhs.GetYear())
         return false;
     else {
-        if (m_month > other.m_month)
+        if (lhs.Getmonth() > rhs.Getmonth())
             return true;
-        else if (m_month < other.m_month)
+        else if (lhs.Getmonth() < rhs.Getmonth())
             return false;
         else {
-            return m_day > other.m_day;
+            return lhs.Getday() > rhs.Getmonth();
         }
     }
 }
 
-bool Date::operator<(const Date &other) const {
-    return !(*this > other) && !(*this == other);
+bool operator<(const Date &lhs,const Date &rhs) {
+    return !(lhs > rhs) && !(lhs == rhs);
 }
 
-bool Date::operator==(const Date &other) const {
-    return m_year == other.m_year && m_month == other.m_month && m_day == other.m_day;
+bool operator==(const Date &lhs,const Date &rhs) {
+    return lhs.GetYear() == rhs.GetYear() && lhs.Getmonth() == rhs.Getmonth() && lhs.Getday() == rhs.Getday();
 }
 
 std::ostream & operator <<( std::ostream & os, const Date & date ) {

@@ -123,12 +123,6 @@ class Date {
          */
         std::string Getmonthname(const unsigned& month);
 
-        bool operator>(const Date &other) const;
-
-        bool operator<(const Date &other) const;
-
-        bool operator==(const Date &other) const; 
-
 };
 
 /**
@@ -140,7 +134,7 @@ class Date {
 std::ostream & operator <<( std::ostream & os, const Date & date );
 
 /**
- \brief Overloaded input stream extraction operator for the Date class.p
+ \brief Overloaded input stream extraction operator for the Date class
  \param input The input stream from which to extract data.
  \param date The Date object to store the extracted data.
  \return A reference to the input stream
@@ -149,4 +143,27 @@ std::ostream & operator <<( std::ostream & os, const Date & date );
  */
 std::istream & operator >>( std::istream & input, Date & date );
 
+/**
+ \brief Overloaded greater than operator for the Date class
+ \param input The input stream from which to extract data.
+ \param date The Date object to store the extracted data.
+ \return True if lhs > rhs, else false.
+ */
+bool operator>(const Date &lhs,const Date &rhs);
 
+/**
+ \brief Overloaded lesser than operator for the Date class.
+ \param input The input stream from which to extract data.
+ \param date The Date object to store the extracted data.
+ \return True if lhs < rhs, else false.
+ */
+bool operator<(const Date &lhs,const Date &rhs);
+
+/**
+ \brief Overloaded input stream extraction operator for the Date class
+ \param input The input stream from which to extract data.
+ \param date The Date object to store the extracted data.
+ \return True if lhs == rhs, else false
+
+ */
+bool operator==(const Date &lhs,const Date &rhs); 

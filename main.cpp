@@ -21,7 +21,8 @@ typedef struct {
     float airtemp;
 } RecType;
 
-typedef Vector<RecType> LogType; 
+typedef Vector<RecType> LogType;
+typedef BST<std::map<unsigned, LogType>> BSTMAPDATA; 
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
 void runtime();
@@ -39,7 +40,7 @@ int main() {
 
 void runtime() {
     std::string filename;
-    LogType wind_data = LogType(5);
+    LogType wind_data;
     std::ifstream inputFile("data/data_source.txt");
 
     while (std::getline(inputFile, filename)) {
@@ -161,8 +162,11 @@ void runtime() {
 
     //next: finding where to get WAST and R
 
-    //DisplaySameasAverage(wind_data,average);
+    // shoving all the data into a BST<MAP>
+    
 
+    //DisplaySameasAverage(wind_data,average);
+    wind_data.Clear();
     // Assignment1: Menu options time
     bool choice = true;
     while (choice) {
@@ -195,7 +199,7 @@ void runtime() {
 
     // outfile.close();
 
-    wind_data.Clear();
+ 
     std::cout << "Data Cleared." <<std::endl;
 }
 
