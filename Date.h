@@ -123,6 +123,12 @@ class Date {
          */
         std::string Getmonthname(const unsigned& month);
 
+        bool operator>(const Date &other) const;
+
+        bool operator<(const Date &other) const;
+
+        bool operator==(const Date &other) const; 
+
 };
 
 /**
@@ -142,3 +148,5 @@ std::ostream & operator <<( std::ostream & os, const Date & date );
  \todo Seperate the formatting from the overloaded function into the class itself. 
  */
 std::istream & operator >>( std::istream & input, Date & date );
+
+

@@ -55,6 +55,7 @@ void Date::SetDay(unsigned day) {
 void Date::SetMonth(unsigned month) {
     if (month<1 || month>12) {
         std::cout << "Invalid month detected. Please check the data again." << std::endl;
+        exit(-1);
     } else {
         m_month = month;
     }
@@ -68,8 +69,32 @@ void Date::SetDate(std::string& fulldate) {
     m_FullDate = fulldate;
 }
 
+bool Date::operator>(const Date &other) const {
+    if (m_year > other.m_year)
+        return true;
+    else if (m_year < other.m_year)
+        return false;
+    else {
+        if (m_month > other.m_month)
+            return true;
+        else if (m_month < other.m_month)
+            return false;
+        else {
+            return m_day > other.m_day;
+        }
+    }
+}
+
+bool Date::operator<(const Date &other) const {
+    return !(*this > other) && !(*this == other);
+}
+
+bool Date::operator==(const Date &other) const {
+    return m_year == other.m_year && m_month == other.m_month && m_day == other.m_day;
+}
+
 std::ostream & operator <<( std::ostream & os, const Date & date ) {
-    os << "  Date: " << date.GetDate();
+    os << date.Getday() << "/" << date.Getmonth() << "/" << date.GetYear();
     return os;
 }
 
@@ -92,4 +117,6 @@ std::istream & operator >>( std::istream & input, Date& date ) {
 
     return input;
 }
+
+
 
