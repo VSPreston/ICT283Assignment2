@@ -24,6 +24,7 @@ typedef struct {
 typedef Vector<RecType> LogType; 
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
+void runtime();
 void option1(LogType& inputdata);
 void option2(LogType& inputdata);
 void option3(LogType& inputdata);
@@ -32,6 +33,11 @@ void option4(LogType& inputdata);
 void menu();
 
 int main() {
+    runtime();
+    return 0;
+}
+
+void runtime() {
     std::string filename;
     LogType wind_data = LogType(5);
     std::ifstream inputFile("data/data_source.txt");
@@ -191,7 +197,6 @@ int main() {
 
     wind_data.Clear();
     std::cout << "Data Cleared." <<std::endl;
-    return 0;
 }
 
 float CalculateMean(const Vector<float>& array, int size) {
