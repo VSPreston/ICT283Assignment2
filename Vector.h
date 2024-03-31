@@ -5,13 +5,15 @@
 
 #pragma once
 #include <vector>
+#include <algorithm>
+#include <random>
 
 /**
  * @class Vector
  * @brief  Manages an encapsulated STL vector within the class of Vector.
  * 
  * @author Wong Liang Jun
- * @version 1.0.1
+ * @version 1.0.2
  * @date 31/03/2024
  *
  */
@@ -117,7 +119,7 @@ class Vector {
          * @param index The index of the element to access.
          * @return A reference to the element at the specified index.
          */
-        T& operator[] (int index);
+        T& operator[] (const int &index);
 
         /**
          * @brief Overloaded const access operator.
@@ -129,7 +131,14 @@ class Vector {
          * @param index The index of the element to access in the vector.
          * @return A const reference to the element at the specified index.
          */
-        const T& operator[] (int index) const;
+        const T& operator[] (const int &index) const;
+
+        /**
+         * @brief Shuffle function 
+         *
+         * Provides the vector class to change the position of the data in the vector. 
+         */
+        void Shuffle();
 
 }; 
 
@@ -227,7 +236,7 @@ Vector<T>& Vector<T>::operator = (const Vector<T>& input) {
 }
 
 template <class T>
-T& Vector<T>::operator[] (int index) {
+T& Vector<T>::operator[] (const int & index) {
     if (index >= 0 && index < m_array.size()) {
         return m_array[index];
     } else {
@@ -236,10 +245,16 @@ T& Vector<T>::operator[] (int index) {
 }
 
 template <class T>
-const T& Vector<T>::operator[] (int index) const {
+const T& Vector<T>::operator[] (const int & index) const {
     if (index >= 0 && index < m_array.size()) {
         return m_array[index];
     } else {
         throw std::out_of_range("Index out of range");
     }
+}
+
+template <class T>
+void Vector<T>::Shuffle() {
+    auto rng = std::default_random_engine {};
+    std::shuffle(std::begin(m_array), std::end(m_array), rng);
 }
