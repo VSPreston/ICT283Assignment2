@@ -1,5 +1,6 @@
 #include "Date.h"
-#include "Time.h" 
+#include "Time.h"
+#include "BST.h"
 // #include "Date.cpp" // for testing purposes.
 // #include "Time.cpp"  // for testing purposes.
 #include "Vector.h"

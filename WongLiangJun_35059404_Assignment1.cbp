@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="BST.h" />
 		<Unit filename="Date.cpp" />
 		<Unit filename="Date.h" />
 		<Unit filename="Time.cpp" />

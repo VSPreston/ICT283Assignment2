@@ -4,32 +4,21 @@
  */
 
 #pragma once
+#include <vector>
 
 /**
  * @class Vector
- * @brief  Manages a simple Vector array with a size and capacity.
+ * @brief  Manages an encapsulated STL vector within the class of Vector.
  * 
  * @author Wong Liang Jun
  * @version 1.0.1
- * @date 25/02/2024
- *
- * @todo Add something similar to the STL vector's emplace_back.
+ * @date 31/03/2024
  *
  */
 template <class T>
 class Vector {
     private:
-        T* m_array = nullptr; // pointer to the heap
-        int m_size; // number of elements in the vector
-        int m_capacity; // size of the array in the heap
-
-        /**
-         * @brief Reallocate the array to a new capacity.
-         *
-         * @param newCapacity The new capacity of the array.
-         */
-        void ReAlloc(int newCapacity);
-
+        std::vector<T> m_array; // pointer to the heap
 
     public:
         /**
@@ -50,13 +39,6 @@ class Vector {
         Vector(int n);
 
         /**
-         * @brief Destructor.
-         *
-         * Releases the memory allocated for the vector.
-         */
-        ~Vector(); //To release the memory 
-
-        /**
          * @brief Get the current size of the vector.
          *
          * @return The number of elements in the vector.
@@ -69,7 +51,7 @@ class Vector {
          * @param item The item to be added.
          * @return True if the item was added successfully, false otherwise.
          */
-        bool Add(const T& item); 
+        void Add(const T& item); 
 
         /**
          * @brief Remove the last element from the vector.
@@ -87,7 +69,6 @@ class Vector {
          * @brief Get the element at the specified index.
          *
          * @param index The index of the element to retrieve.
-         * @return A reference to the element at the specified index.
          */
         const T& getat(int index);
 
@@ -99,7 +80,7 @@ class Vector {
          * @param index The index of the element to set.
          * @param input The new value for the element.
          */
-        void setat(int index, const T& input);
+        void Insert(int index, const T& input);
 
         /**
          * @brief Modify the element at the specified index.
@@ -150,181 +131,115 @@ class Vector {
          */
         const T& operator[] (int index) const;
 
-        /**
-         * @brief Returns the pointer to the vector's array
-         *
-         * @return A pointer to the underlying array data.
-         */
-        T* Data();
-
-        /**
-         * @brief An overloaded data function for const pointer to vector's array. 
-         *
-         * @return m_array 
-         */
-        const T* Data() const;
-
 }; 
 
 // implementation
 
 template <class T>
 Vector<T>::Vector() {
-    if (m_array != nullptr) {
-        m_capacity = 10;
-    }
-    m_size = 0;
- 
-    m_array = new T[m_capacity];
+    m_array = std::vector<T>(10);
 }
 
 template <class T>
 Vector<T>::Vector(int n) {
-    if (n <= 0) {
-        std::cerr << "Inappropriate size into vector! Please try again." << std::endl;
-        exit(-1);
-    } else {
-        m_capacity = n;
-    }
-    if (m_array != nullptr) {
-        m_capacity = n;
-    }
-    m_size = 0;
-    m_array = new T[m_capacity];
-}
-
-template <class T>
-Vector<T>::~Vector() {
-    if (m_array != nullptr) {
-        delete[] m_array;
-        m_array = nullptr;
-    }
+    m_array = std::vector<T>(n);
 }
 
 template <class T>
 int Vector<T>::Size() {
-    return m_size;
+    return m_array.size();
 }
 
 template <class T>
-bool Vector<T>::Add(const T& item) { // How push_back would work.
-    if (m_size >= m_capacity/2) {
-        ReAlloc(m_capacity + m_capacity/2); // Increment the capacity of array by 1.5. 
-    }
-    if (m_size != m_capacity) {
-        m_array[m_size] = item;
-        m_size++;
-        return true;
-    }
-    return false;
+void Vector<T>::Add(const T& item) { // How push_back would work.
+    m_array.push_back(item);
 }
 
-template <class T>
-void Vector<T>::ReAlloc(int newCapacity) {
-    T* newBlock = new T[newCapacity];
+// template <class T>
+// void Vector<T>::ReAlloc(int newCapacity) {
+//     T* newBlock = new T[newCapacity];
 
-    if (newCapacity < m_size) {
-        m_size = newCapacity;
-    }
+//     if (newCapacity < m_size) {
+//         m_size = newCapacity;
+//     }
 
-    for (int i = 0; i< m_size; i++) {
-        newBlock[i] = m_array[i];
-    }
-    delete[] m_array;
-    m_array = newBlock;
-    m_capacity = newCapacity;
-}
+//     for (int i = 0; i< m_size; i++) {
+//         newBlock[i] = m_array[i];
+//     }
+//     delete[] m_array;
+//     m_array = newBlock;
+//     m_capacity = newCapacity;
+// }
 
 template <class T>
 const T& Vector<T>::getat(int index) {
-    if (index >= m_size) {
-        std::cerr << "Index over limit!" <<std::endl;
-        exit(-1);        
+    if (index >= 0 && index < Size()) {
+        return m_array[index];
+    } else {
+        throw std::out_of_range("Index out of range");
     }
-    return m_array[index];
 }
 
 template <class T>
-void Vector<T>::setat(int index, const T& input) {
-    if (index >= m_capacity) {
-        std::cerr << "Index over limit!" <<std::endl;
-        exit(-1);
-    }
-    m_capacity = m_capacity +1;
-    for (int i = m_capacity; i >= index; i-- ) {
-        m_array[i+1] = m_array[i];
-    }
-    m_array[index] = input;
-    m_size++;
-    if (m_size > m_capacity/2) {
-        ReAlloc(m_capacity + m_capacity/2);
+void Vector<T>::Insert(int index, const T& input) {
+    if (index >= 0 && index <= Size()) {
+        m_array.insert(m_array.begin() + index, input);
+    } else {
+        throw std::out_of_range("Index out of range");
     }
 }
 
 template <class T>
 void Vector<T>::Remove() { // similar to popback
-    if (m_size > 0) {
-        m_size--;
-        m_array[m_size].~T(); // removes one thing from the back
+    if (!m_array.empty()) {
+        m_array.pop_back();
     }
 }
 
 template <class T>
 void Vector<T>::Modify(int index, const T& input) {
-    m_array[index] = input;
+    if (index >= 0 && index < Size()) {
+        m_array[index] = input;
+    } else {
+        throw std::out_of_range("Index out of range");
+    }
 }
 
 template <class T>
 void Vector<T>::Delete(int index) { 
-    if (m_size > 0) {
-        for (int i = index; i < m_capacity; i++ ) {
-            m_array[i] = m_array[i+1];// removes one thing at index
-        } 
-        m_size--;
+    if (index >= 0 && index < Size()) {
+        auto itr = m_array.begin() + index;
+        m_array.erase(itr);
     }
 }
 
 template <class T>
 void Vector<T>::Clear() { //clears the entire array.
-    delete[] m_array;
-    m_array = nullptr;
-    m_size = 0;
-    m_capacity = 0;
+    m_array.clear();
 }
 
 template <class T>
 Vector<T>& Vector<T>::operator = (const Vector<T>& input) {
-
     if (this != &input) {
-       if (input.m_array != nullptr) {
-            delete[] m_array;
-            m_size = input.m_size;
-            m_capacity = input.m_capacity;
-            m_array = new T[m_size];
-            for (int i =0; i<m_size ; i++) {
-                m_array[i] = input.m_array[i];
-            }
-        }
-    }    
+        m_array = input.m_array;
+    }
     return *this;
 }
 
 template <class T>
 T& Vector<T>::operator[] (int index) {
-    return m_array[index];
+    if (index >= 0 && index < m_array.size()) {
+        return m_array[index];
+    } else {
+        throw std::out_of_range("Index out of range");
+    }
 }
 
 template <class T>
 const T& Vector<T>::operator[] (int index) const {
-    return m_array[index];
-}
-
-template <class T>
-T* Vector<T>::Data() {
-    return m_array;
-}
-
-template <class T>
-const T* Vector<T>::Data() const {
-    return m_array;
+    if (index >= 0 && index < m_array.size()) {
+        return m_array[index];
+    } else {
+        throw std::out_of_range("Index out of range");
+    }
 }
