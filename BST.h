@@ -14,47 +14,47 @@ struct node
 template <class elemType>
 class BST{
 public:
-    const BST<elemType>& operator=(const BST<elemType>&);
     //Overload the assignment operator.
+    const BST<elemType>& operator=(const BST<elemType>&);
 
-    bool isEmpty() const;
     //Function to determine whether the binary tree is empty.
     //Postcondition: Returns true if the binary tree is empty;
     // otherwise, returns false.
+    bool isEmpty() const;
 
-    void inorderTraversal(void (*visit) (elemType&)) const;  
     //Function to do an inorder traversal of the binary tree.
     //Postcondition: Nodes are printed in inorder sequence.
+    void inorderTraversal(void (*visit) (elemType&)) const;  
 
-    void preorderTraversal(void (*visit) (elemType&)) const;
     //Function to do a preorder traversal of the binary tree.
     //Postcondition: Nodes are printed in preorder sequence.
+    void preorderTraversal(void (*visit) (elemType&)) const;
 
-    void postorderTraversal(void (*visit) (elemType&)) const;
     //Function to do a postorder traversal of the binary tree.
     //Postcondition: Nodes are printed in postorder sequence.
+    void postorderTraversal(void (*visit) (elemType&)) const;
 
-    void destroyTree();
     //Function to destroy the binary tree.
     //Postcondition: Memory space occupied by each node
     // is deallocated.
     // root = nullptr;
+    void destroyTree();
 
-    bool search(const elemType& searchItem) const;
     //Function to determine if searchItem is in the binary
     //tree.
     //Postcondition: Returns true if searchItem is found in
     // the binary tree; otherwise, returns
     // false.
+    bool search(const elemType& searchItem) const;
 
-    void insert(const elemType& insertItem);
     //Function to insert insertItem in the binary tree.
     //Postcondition: If there is no node in the binary tree
     // that has the same info as insertItem, a
     // node with the info insertItem is created
     // and inserted in the binary search tree.
+    // Takes in a function pointer to display duplicate error.
+    void insert(const elemType& insertItem, void (*duplicates) ());
 
-    void deleteNode(const elemType& deleteItem);
     //Function to delete deleteItem from the binary tree
     //Postcondition: If a node with the same info as
     // deleteItem is found, it is deleted from
@@ -62,12 +62,14 @@ public:
     // If the binary tree is empty or
     // deleteItem is not in the binary tree,
     // an appropriate message is printed.
+    void deleteNode(const elemType& deleteItem);
 
-    BST(const BST<elemType>& otherTree);
     //Copy constructor
+    BST(const BST<elemType>& otherTree);
 
-    BST();
     //Default constructor
+    BST();
+
 
     ~BST();
     //Destructor
@@ -265,7 +267,7 @@ bool BST<elemType>::search (const elemType& searchItem) const {
 }//end search
 
 template <class elemType>
-void BST<elemType>::insert (const elemType& insertItem) {
+void BST<elemType>::insert(const elemType& insertItem, void (*duplicates) ()) {
     node<elemType> *current; //pointer to traverse the tree
     node<elemType> *trailCurrent = nullptr; //pointer behind current
     node<elemType> *newNode; //pointer to create the node
@@ -280,7 +282,7 @@ void BST<elemType>::insert (const elemType& insertItem) {
         while (current != nullptr) {
             trailCurrent = current;
             if (current->info == insertItem) {
-                std::cout << "Duplicate data found, data will not be inserted." << std::endl;
+                (*duplicates) ();
                 return;
             } else if (current->info > insertItem) {
                 current = current->lLink;                
