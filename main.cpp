@@ -19,10 +19,12 @@ typedef struct {
     float speed;
     float solarrad;
     float airtemp;
+
 } RecType;
 
 typedef Vector<RecType> LogType;
-typedef BST<std::map<unsigned, LogType>> BSTMAPDATA; 
+typedef BST<RecType> BSTtype;
+typedef std::map<unsigned, LogType> MAPDATA; 
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
 void runtime();
@@ -30,7 +32,10 @@ void option1(LogType& inputdata);
 void option2(LogType& inputdata);
 void option3(LogType& inputdata);
 void option4(LogType& inputdata);
-
+void printyear(unsigned &value);
+bool operator>(const RecType &lhs,const RecType &rhs);
+bool operator<(const RecType &lhs,const RecType &rhs);
+bool operator==(const RecType &lhs,const RecType &rhs);
 void menu();
 
 int main() {
@@ -52,7 +57,7 @@ void runtime() {
             continue; // Move to the next file
         }
 
-        std::cout << "Processing file: " << filename << std::endl;
+        // std::cout << "Processing file: " << filename << std::endl;
         int wastpostion = -1;
         int speedpostion = -1;
         int solarradposition = -1;
@@ -163,44 +168,52 @@ void runtime() {
     //next: finding where to get WAST and R
 
     // shoving all the data into a BST<MAP>
-    
-
-    //DisplaySameasAverage(wind_data,average);
-    wind_data.Clear();
-    // Assignment1: Menu options time
-    bool choice = true;
-    while (choice) {
-        menu();
-        int option;
-        std::cin >> option;
-        switch (option) {
-            case 1:
-                option1(wind_data);
-                break;
-            case 2:
-                option2(wind_data);
-                break;
-            case 3:
-                option3(wind_data);
-                break;
-            case 4: 
-                option4(wind_data); 
-                break;
-            case 5:
-                // exit out
-                std::cout << "Ending program..." << std::endl;
-                choice = false;
-                break;
-            default:
-                std::cout << "Invalid option" << std::endl;
-                break;
-        }
+    wind_data.Shuffle();
+    BSTtype BSTdata;
+    for (int i = 0;i < wind_data.Size();i++) { //for every datapoint in wind_data
+            BSTdata.insert(wind_data[i]);
     }
 
-    // outfile.close();
+    // wind_data2.inorderTraversal();
 
+    //DisplaySameasAverage(wind_data,average);
+
+    // Assignment1: Menu options time
+    // bool choice = true;
+    // while (choice) {
+    //     menu();
+    //     int option;
+    //     std::cin >> option;
+    //     switch (option) {
+    //         case 1:
+    //             option1(wind_data);
+    //             break;
+    //         case 2:
+    //             option2(wind_data);
+    //             break;
+    //         case 3:
+    //             option3(wind_data);
+    //             break;
+    //         case 4: 
+    //             option4(wind_data); 
+    //             break;
+    //         case 5:
+
+    //             break;
+    //         case 6:
+    //             std::cout << "Ending program..." << std::endl;
+    //             choice = false;
+    //             break;
+    //         default:
+    //             std::cout << "Invalid option" << std::endl;
+    //             break;
+    //     }
+    // }
+
+    // outfile.close();
+    // wind_data.Clear();
  
-    std::cout << "Data Cleared." <<std::endl;
+    // std::cout << "Data Cleared." <<std::endl;
 }
 
 float CalculateMean(const Vector<float>& array, int size) {
@@ -231,7 +244,8 @@ void menu() {
     std::cout << "2: Average and Standard deviation ambient air temperature in each month for a specified year" << std::endl;
     std::cout << "3: Total solar radiation of each month of a specified year" << std::endl;
     std::cout << "4: Average wind speed (km/h), average ambient air temperature and total solar radiation in kWh/m2 at a specified year. Output into WindTempSolar.csv." << std::endl;
-    std::cout << "5: Exit program" << std::endl;
+    std::cout << "5: UNFINISHED OPTION DO NOT USE" << std::endl;
+    std::cout << "6: Exit" << std::endl;
 }
 
 void option1(LogType& inputdata) {
@@ -392,4 +406,30 @@ void option4(LogType& inputdata) {
     }
     outfile.close();
     std::cout << "Data printed. Check WindTempSolar.csv for details."<< std::endl;
+}
+
+void printyear(unsigned &value) {
+    std::cout << value << std::endl;
+}
+
+bool operator>(const RecType &lhs,const RecType &rhs) {
+    if (lhs.d > rhs.d)
+        return true;
+    else if (lhs.d > rhs.d)
+        return false;
+    else {
+        if (lhs.t > rhs.t) {
+            return true;            
+        } else {
+            return lhs.t > rhs.t;
+        }
+    }
+}
+
+bool operator<(const RecType &lhs,const RecType &rhs) {
+    return !(lhs > rhs) && !(lhs == rhs);
+}
+
+bool operator==(const RecType &lhs,const RecType &rhs) {
+    return lhs.d == rhs.d&& lhs.t == rhs.t;
 }
