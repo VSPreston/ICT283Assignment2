@@ -65,3 +65,21 @@ std::istream & operator >>( std::istream & input, Time & time ) { // this is for
 
     return input;
 }
+
+bool operator>(const Time &lhs,const Time &rhs) {
+    if (lhs.Gethour() > rhs.Gethour())
+        return true;
+    else if (lhs.Gethour() < rhs.Gethour())
+        return false;
+    else {
+            return lhs.Getminute() > rhs.Getminute();
+    }
+}
+
+bool operator<(const Time &lhs,const Time &rhs) {
+    return !(lhs > rhs) && !(lhs == rhs);
+}
+
+bool operator==(const Time &lhs,const Time &rhs) {
+    return lhs.Gethour() == rhs.Gethour() && lhs.Getminute() == rhs.Getminute();
+}

@@ -127,3 +127,27 @@ std::ostream & operator <<( std::ostream & os, const Time & time );
  \todo Seperate the formatting from the overloaded function into the class itself. 
  */
 std::istream & operator >>( std::istream & input, Time & time );
+
+/**
+ \brief Overloaded lesser than operator for the Date class.
+ \param lhs The left-hand-side Date object for comparison.
+ \param rhs The right-hand-side Date object for comparison.
+ \return True if lhs < rhs, else false.
+ */
+bool operator>(const Time &lhs,const Time &rhs);
+
+/**
+ \brief Overloaded lesser than operator for the Time class.
+ \param lhs The left-hand-side Time object for comparison.
+ \param rhs The right-hand-side Time object for comparison.
+ \return True if lhs < rhs, else false.
+ */
+bool operator<(const Time &lhs,const Time &rhs);
+
+/**
+ \brief Overloaded lesser than operator for the Time class.
+ \param lhs The left-hand-side Time object for comparison.
+ \param rhs The right-hand-side Time object for comparison.
+ \return True if lhs < rhs, else false.
+ */
+bool operator==(const Time &lhs,const Time &rhs);

@@ -145,25 +145,24 @@ std::istream & operator >>( std::istream & input, Date & date );
 
 /**
  \brief Overloaded greater than operator for the Date class
- \param input The input stream from which to extract data.
- \param date The Date object to store the extracted data.
+ \param lhs The left-hand-side Date object for comparison.
+ \param rhs The right-hand-side Date object for comparison.
  \return True if lhs > rhs, else false.
  */
 bool operator>(const Date &lhs,const Date &rhs);
 
 /**
  \brief Overloaded lesser than operator for the Date class.
- \param input The input stream from which to extract data.
- \param date The Date object to store the extracted data.
+ \param lhs The left-hand-side Date object for comparison.
+ \param rhs The right-hand-side Date object for comparison.
  \return True if lhs < rhs, else false.
  */
 bool operator<(const Date &lhs,const Date &rhs);
 
 /**
  \brief Overloaded input stream extraction operator for the Date class
- \param input The input stream from which to extract data.
- \param date The Date object to store the extracted data.
+ \param lhs The left-hand-side Date object for comparison.
+ \param rhs The right-hand-side Date object for comparison.
  \return True if lhs == rhs, else false
-
  */
 bool operator==(const Date &lhs,const Date &rhs); 
