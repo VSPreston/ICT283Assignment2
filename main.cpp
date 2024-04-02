@@ -19,11 +19,12 @@ typedef struct {
     float speed;
     float solarrad;
     float airtemp;
-
 }RecType;
 
 typedef Vector<RecType> LogType;
+typedef std::map<unsigned, RecType> MAPtype;
 typedef BST<RecType> BSTtype;
+
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
 void runtime();
@@ -48,6 +49,7 @@ void runtime() {
     std::string filename;
     LogType wind_data;
     BSTtype BSTdata;
+    MAPtype MAPdata;
     std::ifstream inputFile("data/data_source.txt");
 
     while (std::getline(inputFile, filename)) {
@@ -150,13 +152,8 @@ void runtime() {
                 tempwrt.speed = tempspeed;
                 tempwrt.airtemp = tempairt;
                 tempwrt.solarrad = tempsr;
-                if (!(BSTdata.isEmpty()) || !(BSTdata.search(tempwrt))) { // check for duplicates using map
-                    BSTdata.insert(tempwrt, printduplicate);
-                    wind_data.Add(tempwrt);
-                    index++;
-                } else {
-                    printduplicate();
-                }
+                wind_data.Add(tempwrt);
+                index++;
             }     
         }
     
@@ -172,11 +169,24 @@ void runtime() {
         infile.close(); // Close the file after processing
     }
 
-    std::cout << BSTdata.size() << std::endl;
+    // std::cout << BSTdata.size() << std::endl;
 
-    BSTdata.inorderTraversal([](RecType& data) {
-       std::cout << data.d << std::endl;
-    });
+    // BSTdata.inorderTraversal([](RecType& data) {
+    //    std::cout << data.d << std::endl;
+    // });
+
+    wind_data.Shuffle();
+    // for (int i = 0; i < wind_data.Size(); i++) {
+    //     BSTdata.insert(wind_data[i], printduplicate);
+    // }
+    for (int i = 0; i < wind_data.Size(); i++) {
+        int key = wind_data[i].d.GetYear()*100000000 + wind_data[i].d.Getmonth()*1000000 + wind_data[i].d.Getday()*10000 + wind_data[i].t.Gethour()*100 + wind_data[i].t.Getminute();
+        MAPdata[key] = wind_data[i];
+    }
+
+    // std::cout << BSTdata.size() << " " << wind_data.Size() <<std::endl;
+
+    std::cout << MAPdata.size() << " " << wind_data.Size() <<std::endl;
 
     // Assignment1: Menu options time
     // bool choice = true;
@@ -409,5 +419,5 @@ bool operator<(const RecType &lhs,const RecType &rhs) {
 }
 
 bool operator==(const RecType &lhs,const RecType &rhs) {
-    return lhs.d == rhs.d&& lhs.t == rhs.t;
+    return lhs.d == rhs.d && lhs.t == rhs.t;
 }
