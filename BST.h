@@ -70,9 +70,11 @@ public:
     //Default constructor
     BST();
 
-
-    ~BST();
     //Destructor
+    ~BST();
+
+    //calculates the total elements in the BST.
+    int size();
 
 protected:
     node<elemType> *root;
@@ -112,7 +114,10 @@ private:
     // sequence.
 
     void deleteFromTree(node<elemType>* &p);
+    //cant remember what dis did
 
+    int countnodes(node<elemType> *current);
+    // counts number of nodes in the BST
 };
 
 // implementations
@@ -376,5 +381,23 @@ void BST<elemType>::deleteNode (const elemType& deleteItem) {
         }
     }
 } //end deleteNode
+
+template <class elemType>
+int BST<elemType>::countnodes(node<elemType> *current) {
+    if (current == nullptr) {
+        return 0;
+    } else {
+        return 1 + countnodes(current->lLink) + countnodes(current-> rLink);
+    }
+}
+
+template <class elemType>
+int BST<elemType>::size() {
+    if (this->isEmpty()) {
+        return 0;
+    } else {
+        return countnodes(root);
+    }
+}
 
 #endif
