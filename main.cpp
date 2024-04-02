@@ -24,15 +24,14 @@ typedef struct {
 
 typedef Vector<RecType> LogType;
 typedef BST<RecType> BSTtype;
-typedef std::map<unsigned, LogType> MAPDATA; 
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
 void runtime();
-void option1(BSTtype& inputdata);
-void option2(BSTtype& inputdata);
-void option3(BSTtype& inputdata);
-void option4(BSTtype& inputdata);
-void option5(BSTtype& inputdata);
+void option1(LogType& inputdata);
+void option2(LogType& inputdata);
+void option3(LogType& inputdata);
+void option4(LogType& inputdata);
+void option5(LogType& inputdata);
 void printyear(unsigned &value);
 void printduplicate();
 bool operator>(const RecType &lhs,const RecType &rhs);
@@ -48,6 +47,7 @@ int main() {
 void runtime() {
     std::string filename;
     LogType wind_data;
+    BSTtype BSTdata;
     std::ifstream inputFile("data/data_source.txt");
 
     while (std::getline(inputFile, filename)) {
@@ -150,8 +150,13 @@ void runtime() {
                 tempwrt.speed = tempspeed;
                 tempwrt.airtemp = tempairt;
                 tempwrt.solarrad = tempsr;
-                wind_data.Add(tempwrt);
-                index++;
+                if (!(BSTdata.isEmpty()) || !(BSTdata.search(tempwrt))) { // check for duplicates using map
+                    BSTdata.insert(tempwrt, printduplicate);
+                    wind_data.Add(tempwrt);
+                    index++;
+                } else {
+                    printduplicate();
+                }
             }     
         }
     
@@ -167,51 +172,43 @@ void runtime() {
         infile.close(); // Close the file after processing
     }
 
-    //next: finding where to get WAST and R
+    std::cout << BSTdata.size() << std::endl;
 
-    // shoving all the data into a BST<MAP>
-    wind_data.Shuffle();
-    BSTtype BSTdata;
-    for (int i = 0;i < wind_data.Size();i++) { //for every datapoint in wind_data
-            BSTdata.insert(wind_data[i], printduplicate);
-    }
-    wind_data.Clear();
-
-    // wind_data2.inorderTraversal();
-
-    //DisplaySameasAverage(wind_data,average);
+    BSTdata.inorderTraversal([](RecType& data) {
+       std::cout << data.d << std::endl;
+    });
 
     // Assignment1: Menu options time
-    bool choice = true;
-    while (choice) {
-        menu();
-        int option;
-        std::cin >> option;
-        switch (option) {
-            case 1:
-                option1(BSTdata);
-                break;
-            case 2:
-                option2(BSTdata);
-                break;
-            case 3:
-                option3(BSTdata);
-                break;
-            case 4: 
-                option4(BSTdata); 
-                break;
-            case 5:
+    // bool choice = true;
+    // while (choice) {
+    //     menu();
+    //     int option;
+    //     std::cin >> option;
+    //     switch (option) {
+    //         case 1:
+    //             option1(wind_data);
+    //             break;
+    //         case 2:
+    //             option2(wind_data);
+    //             break;
+    //         case 3:
+    //             option3(wind_data);
+    //             break;
+    //         case 4: 
+    //             option4(wind_data); 
+    //             break;
+    //         case 5:
 
-                break;
-            case 6:
-                std::cout << "Ending program..." << std::endl;
-                choice = false;
-                break;
-            default:
-                std::cout << "Invalid option" << std::endl;
-                break;
-        }
-    }
+    //             break;
+    //         case 6:
+    //             std::cout << "Ending program..." << std::endl;
+    //             choice = false;
+    //             break;
+    //         default:
+    //             std::cout << "Invalid option" << std::endl;
+    //             break;
+    //     }
+    // }
 
     // outfile.close();
 
@@ -251,7 +248,7 @@ void menu() {
     std::cout << "6: Exit" << std::endl;
 }
 
-void option1(BSTtype& inputdata) {
+void option1(LogType& inputdata) {
     std::cout << "Enter month and year : ";
     std::string month, year;
     std::cin >> month >> year;
@@ -264,14 +261,14 @@ void option1(BSTtype& inputdata) {
 
     //check year first
 
-    // for (int i = 0; i< inputdata.Size();i++) {
-    //     if (stoul(month) == inputdata[i].d.Getmonth() && stoul(year) == inputdata[i].d.GetYear()) {
-    //         if (inputdata[i].speed != 0) {
-    //             speedarray.Add(inputdata[i].speed);
-    //             elements++;
-    //         }
-    //     }
-    // }
+    for (int i = 0; i< inputdata.Size();i++) {
+        if (stoul(month) == inputdata[i].d.Getmonth() && stoul(year) == inputdata[i].d.GetYear()) {
+            if (inputdata[i].speed != 0) {
+                speedarray.Add(inputdata[i].speed);
+                elements++;
+            }
+        }
+    }
 
     if (elements == 0) {    
         std::cout << tempdate.Getmonthname(stoul(month)) << " " << year << ":" << "No data" << std::endl; 
@@ -286,7 +283,7 @@ void option1(BSTtype& inputdata) {
 
 }
 
-void option2(BSTtype& inputdata) {
+void option2(LogType& inputdata) {
     std::cout << "Enter year :";
     std::string year;
     std::cin >> year;
@@ -298,14 +295,14 @@ void option2(BSTtype& inputdata) {
         float sd = 0;
         Vector<float> airtemparray = Vector<float>(31);
         int elements = 0;
-        // for (int i = 0; i< inputdata.Size();i++) {
-        //     if (stoul(year) == inputdata[i].d.GetYear() && j == inputdata[i].d.Getmonth()) {
-        //         if (inputdata[i].airtemp != 0) {
-        //             airtemparray.Add(inputdata[i].airtemp);
-        //             elements++;
-        //         }
-        //     }
-        // }
+        for (int i = 0; i< inputdata.Size();i++) {
+            if (stoul(year) == inputdata[i].d.GetYear() && j == inputdata[i].d.Getmonth()) {
+                if (inputdata[i].airtemp != 0) {
+                    airtemparray.Add(inputdata[i].airtemp);
+                    elements++;
+                }
+            }
+        }
         average = CalculateMean(airtemparray, elements);
         sd = CalculateSD(airtemparray, elements);
 
@@ -320,12 +317,12 @@ void option2(BSTtype& inputdata) {
     std::cout << std::endl;
 }
 
-void option3(BSTtype& inputdata) { //sPRR thing calculation
+void option3(LogType& inputdata) { //sPRR thing calculation
 
 
 }
 
-void option4(BSTtype& inputdata) {
+void option4(LogType& inputdata) {
     std::cout << "Enter year :";
     std::string year;
     std::cin >> year;
@@ -396,7 +393,7 @@ void printduplicate() {
 bool operator>(const RecType &lhs,const RecType &rhs) {
     if (lhs.d > rhs.d)
         return true;
-    else if (lhs.d > rhs.d)
+    else if (lhs.d < rhs.d)
         return false;
     else {
         if (lhs.t > rhs.t) {

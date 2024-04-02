@@ -79,8 +79,10 @@ bool operator>(const Date &lhs,const Date &rhs) {
             return true;
         else if (lhs.Getmonth() < rhs.Getmonth())
             return false;
-        else {
-            return lhs.Getday() > rhs.Getday();
+        else if (lhs.Getday() > rhs.Getday()){
+            return true;
+        } else {
+            return false;
         }
     }
 }
