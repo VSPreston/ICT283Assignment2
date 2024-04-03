@@ -3,121 +3,120 @@
 
 #include <iostream>
 
+/// @brief Struct representing a node in a binary search tree.
 template <class Type>
 struct node
 {
+    ///< Information stored in the node.
     Type info;
+
+    ///< Pointer to the left child node.
     node<Type> *lLink;
-    node<Type> *rLink;
+
+    ///< Pointer to the right child node.
+    node<Type> *rLink; 
 };
 
+/// @brief Class representing a Binary Search Tree (BST).
 template <class elemType>
 class BST{
 public:
-    //Overload the assignment operator.
+    ///Overloaded assignment operator.
     const BST<elemType>& operator=(const BST<elemType>&);
 
-    //Function to determine whether the binary tree is empty.
-    //Postcondition: Returns true if the binary tree is empty;
-    // otherwise, returns false.
+    /// @brief Checks if the binary tree is empty.
+    /// @return True if the binary tree is empty, false otherwise.
     bool isEmpty() const;
 
-    //Function to do an inorder traversal of the binary tree.
-    //Postcondition: Nodes are printed in inorder sequence.
+    /// @brief Performs an inorder traversal of the binary tree.
+    /// @param visit Pointer to a function that will be applied to each node's info.
     void inorderTraversal(void (*visit) (elemType&)) const;  
 
-    //Function to do a preorder traversal of the binary tree.
-    //Postcondition: Nodes are printed in preorder sequence.
+    /// @brief Performs a preorder traversal of the binary tree.
+    /// @param visit Pointer to a function that will be applied to each node's info.
     void preorderTraversal(void (*visit) (elemType&)) const;
 
-    //Function to do a postorder traversal of the binary tree.
-    //Postcondition: Nodes are printed in postorder sequence.
+    /// @brief Performs a postorder traversal of the binary tree.
+    /// @param visit Pointer to a function that will be applied to each node's info.
     void postorderTraversal(void (*visit) (elemType&)) const;
 
-    //Function to destroy the binary tree.
-    //Postcondition: Memory space occupied by each node
+    /// @brief Destroys the binary tree.
+    // Postcondition: Memory space occupied by each node
     // is deallocated.
     // root = nullptr;
     void destroyTree();
 
-    //Function to determine if searchItem is in the binary
-    //tree.
+    /// @brief Searches for an item in the binary tree.
+    /// @param searchItem The item to search for.
+    /// @return True if the item is found, false otherwise.
     //Postcondition: Returns true if searchItem is found in
     // the binary tree; otherwise, returns
     // false.
     bool search(const elemType& searchItem) const;
 
-    //Function to insert insertItem in the binary tree.
-    //Postcondition: If there is no node in the binary tree
-    // that has the same info as insertItem, a
-    // node with the info insertItem is created
-    // and inserted in the binary search tree.
-    // Takes in a function pointer to display duplicate error.
+    /// @brief Inserts an item into the binary tree.
+    /// @param insertItem The item to insert.
+    /// @param duplicates Pointer to a function when duplicate is found.
     void insert(const elemType& insertItem, void (*duplicates) ());
 
-    //Function to delete deleteItem from the binary tree
-    //Postcondition: If a node with the same info as
-    // deleteItem is found, it is deleted from
-    // the binary tree.
-    // If the binary tree is empty or
-    // deleteItem is not in the binary tree,
-    // an appropriate message is printed.
+    /// @brief Deletes a node from the binary tree.
+    /// @param deleteItem The item to delete.
     void deleteNode(const elemType& deleteItem);
 
-    //Copy constructor
+    /// @brief Copy constructor of the BST class.
+    /// Runs the copytree function if not null. 
+    /// @param othertree the target tree to copy from.
     BST(const BST<elemType>& otherTree);
 
-    //Default constructor
+    /// @brief Default constructor.
     BST();
 
-    //Destructor
+    /// @brief Destructor.
     ~BST();
 
-    //calculates the total elements in the BST.
+    /// @brief Calculates the total number of elements in the BST.
+    /// @return The total number of elements in the BST.
     int size();
 
 protected:
+    /// Pointer to the root node of the BST.
     node<elemType> *root;
 
 private:
+
+    /// @brief Makes a copy of the binary tree.
+    /// @param copiedTreeRoot Reference to the root of the copied tree.
+    /// @param otherTreeRoot Pointer to the root of the tree to be copied.
     void copyTree(node<elemType>* &copiedTreeRoot, node<elemType>* otherTreeRoot);
-    //Makes a copy of the binary tree to which
-    //otherTreeRoot points.
-    //Postcondition: The pointer copiedTreeRoot points to
-    // the root of the copied binary tree.
 
+    /// @brief Destroys the binary tree.
+    /// @param p Pointer to the root of the tree to be destroyed.
     void destroy(node<elemType>* &p);
-    //Function to destroy the binary tree to which p points.
-    //Postcondition: Memory space occupied by each node, in
-    // the binary tree to which p points, is
-    // deallocated.
-    // p = nullptr;
 
+    /// @brief Performs an inorder traversal of the binary tree.
+    /// @param p Pointer to the root node of the subtree to be traversed.
+    /// @param visit Pointer to a function that will be applied to each node's info.
     void inorder(node<elemType> *p, void (*visit) (elemType&)) const;
-    //Function to do an inorder traversal of the binary
-    //tree to which p points.
-    //Postcondition: Nodes of the binary tree, to which p
-    // points, are printed in inorder sequence.
 
+    /// @brief Performs a preorder traversal of the binary tree.
+    /// @param p Pointer to the root node of the subtree to be traversed.
+    /// @param visit Pointer to a function that will be applied to each node's info.
     void preorder(node<elemType> *p, void (*visit) (elemType&)) const;
-    //Function to do a preorder traversal of the binary
-    //tree to which p points.
-    //Postcondition: Nodes of the binary tree, to which p
-    // points, are printed in preorder
-    // sequence.
 
+    /// @brief Performs a postorder traversal of the binary tree.
+    /// @param p Pointer to the root node of the subtree to be traversed.
+    /// @param visit Pointer to a function that will be applied to each node's info.
     void postorder(node<elemType> *p, void (*visit) (elemType&)) const;
-    //Function to do a postorder traversal of the binary
-    //tree to which p points.
-    //Postcondition: Nodes of the binary tree, to which p
-    // points, are printed in postorder
-    // sequence.
 
+    /// @brief Deletes a node from the binary tree.
+    /// @param p Pointer to the root of the subtree where the node is to be deleted.
     void deleteFromTree(node<elemType>* &p);
-    //cant remember what dis did
 
+    /// @brief Counts the number of nodes in the binary tree.
+    /// @param current Pointer to the root node of the subtree.
+    /// @return The total number of nodes in the subtree.
     int countnodes(node<elemType> *current);
-    // counts number of nodes in the BST
+
 };
 
 // implementations
