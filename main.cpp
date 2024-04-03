@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+#include <unordered_map>
 
 // Compiler command:
 // g++ -Wall -g -std=c++11 -ftime-report main.cpp Time.cpp Date.cpp -o main
@@ -23,7 +24,7 @@ typedef struct {
 
 typedef Vector<RecType> LogType;
 typedef std::map<unsigned, RecType> MAPtype;
-typedef BST<RecType> BSTtype;
+// typedef BST<RecType> BSTtype;
 
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
@@ -48,7 +49,7 @@ int main() {
 void runtime() {
     std::string filename;
     LogType wind_data;
-    BSTtype BSTdata;
+    // BSTtype BSTdata;
     MAPtype MAPdata;
     std::ifstream inputFile("data/data_source.txt");
 
@@ -175,9 +176,18 @@ void runtime() {
         int key = wind_data[i].d.GetYear()*100000000 + wind_data[i].d.Getmonth()*1000000 + wind_data[i].d.Getday()*10000 + wind_data[i].t.Gethour()*100 + wind_data[i].t.Getminute();
         MAPdata[key] = wind_data[i];
     }
-    // for (int i = 0; i < wind_data.Size(); i++) {
-    //     BSTdata.insert(wind_data[i], printduplicate);
-    // }
+    wind_data.Clear();
+
+    //bst data thingy here
+    for (int i =0; i < 11;i++) {
+        LogType newlog;
+        for (auto itr = MAPdata.begin();itr != MAPdata.end();itr++) {
+            if (itr->second.d.Getmonth() == i) {
+                
+            }
+            //add to bst here for the love of god 
+        }
+    }
 
     // std::cout << BSTdata.size() << " " << MAPdata.size() std::endl;
 
