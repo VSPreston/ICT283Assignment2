@@ -28,7 +28,7 @@ typedef BST<RecType> BSTtype;
 float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
 void runtime();
-void option1(LogType& inputdata);
+void option1(MAPtype& inputdata);
 void option2(LogType& inputdata);
 void option3(LogType& inputdata);
 void option4(LogType& inputdata);
@@ -39,6 +39,7 @@ bool operator>(const RecType &lhs,const RecType &rhs);
 bool operator<(const RecType &lhs,const RecType &rhs);
 bool operator==(const RecType &lhs,const RecType &rhs);
 void menu();
+void menu2();
 
 int main() {
     runtime();
@@ -169,56 +170,50 @@ void runtime() {
         infile.close(); // Close the file after processing
     }
 
-    // std::cout << BSTdata.size() << std::endl;
-
-    // BSTdata.inorderTraversal([](RecType& data) {
-    //    std::cout << data.d << std::endl;
-    // });
-
     wind_data.Shuffle();
-    // for (int i = 0; i < wind_data.Size(); i++) {
-    //     BSTdata.insert(wind_data[i], printduplicate);
-    // }
+
     for (int i = 0; i < wind_data.Size(); i++) {
         int key = wind_data[i].d.GetYear()*100000000 + wind_data[i].d.Getmonth()*1000000 + wind_data[i].d.Getday()*10000 + wind_data[i].t.Gethour()*100 + wind_data[i].t.Getminute();
         MAPdata[key] = wind_data[i];
     }
+    for (int i = 0; i < wind_data.Size(); i++) {
+        BSTdata.insert(wind_data[i], printduplicate);
+    }
 
-    // std::cout << BSTdata.size() << " " << wind_data.Size() <<std::endl;
+    // std::cout << BSTdata.size() << " " << MAPdata.size() std::endl;
 
-    std::cout << MAPdata.size() << " " << wind_data.Size() <<std::endl;
 
     // Assignment1: Menu options time
-    // bool choice = true;
-    // while (choice) {
-    //     menu();
-    //     int option;
-    //     std::cin >> option;
-    //     switch (option) {
-    //         case 1:
-    //             option1(wind_data);
-    //             break;
-    //         case 2:
-    //             option2(wind_data);
-    //             break;
-    //         case 3:
-    //             option3(wind_data);
-    //             break;
-    //         case 4: 
-    //             option4(wind_data); 
-    //             break;
-    //         case 5:
-
-    //             break;
-    //         case 6:
-    //             std::cout << "Ending program..." << std::endl;
-    //             choice = false;
-    //             break;
-    //         default:
-    //             std::cout << "Invalid option" << std::endl;
-    //             break;
-    //     }
-    // }
+    bool choice = true;
+    while (choice) {
+        menu();
+        int option;
+        std::cin >> option;
+        switch (option) {
+            case 1:
+                option1(MAPdata);
+                break;
+            case 2:
+                option2(wind_data);
+                break;
+            case 3:
+                option3(wind_data);
+                break;
+            case 4: 
+                option4(wind_data); 
+                break;
+            case 5:
+                option5(wind_data);
+                break;
+            case 6:
+                std::cout << "Ending program..." << std::endl;
+                choice = false;
+                break;
+            default:
+                std::cout << "Invalid option" << std::endl;
+                break;
+        }
+    }
 
     // outfile.close();
 
@@ -252,13 +247,20 @@ void menu() {
     std::cout << "Enter your desired option [1,2,3,4,5]: " << std::endl;
     std::cout << "1: Average and Standard deviation speed of specified month and year" << std::endl;
     std::cout << "2: Average and Standard deviation ambient air temperature in each month for a specified year" << std::endl;
-    std::cout << "3: Total solar radiation of each month of a specified year" << std::endl;
+    std::cout << "3: Pearson Correlation coefficient options" << std::endl;
     std::cout << "4: Average wind speed (km/h), average ambient air temperature and total solar radiation in kWh/m2 at a specified year. Output into WindTempSolar.csv." << std::endl;
     std::cout << "5: UNFINISHED OPTION DO NOT USE" << std::endl;
     std::cout << "6: Exit" << std::endl;
 }
 
-void option1(LogType& inputdata) {
+void menu2() {
+    std::cout << "Enter your desired comparison [1,2,3]: " << std::endl;
+    std::cout << "1: Average and Standard deviation speed of specified month and year" << std::endl;
+    std::cout << "2: Average and Standard deviation ambient air temperature in each month for a specified year" << std::endl;
+    std::cout << "3: " << std::endl;
+}
+
+void option1(MAPtype& inputdata) {
     std::cout << "Enter month and year : ";
     std::string month, year;
     std::cin >> month >> year;
@@ -269,12 +271,11 @@ void option1(LogType& inputdata) {
     int elements = 0;
     Date tempdate;
 
-    //check year first
-
-    for (int i = 0; i< inputdata.Size();i++) {
-        if (stoul(month) == inputdata[i].d.Getmonth() && stoul(year) == inputdata[i].d.GetYear()) {
-            if (inputdata[i].speed != 0) {
-                speedarray.Add(inputdata[i].speed);
+    auto itr = inputdata.begin();
+    for (itr; itr != inputdata.end();itr++) {
+        if (stoul(month) == itr->second.d.Getmonth() && stoul(year) == itr->second.d.GetYear()) {
+            if (itr->second.speed != 0) {
+                speedarray.Add(itr->second.speed);
                 elements++;
             }
         }
@@ -328,7 +329,12 @@ void option2(LogType& inputdata) {
 }
 
 void option3(LogType& inputdata) { //sPRR thing calculation
+    std::cout << "Enter month:";
 
+    bool choice = true;
+    while (choice) {
+
+    }
 
 }
 
@@ -351,22 +357,22 @@ void option4(LogType& inputdata) {
         Vector<float> speedarray = Vector<float>(31);
         float total;
         int solarelements = 0, speedelements = 0, airtempelements = 0;
-        // for (int i = 0; i< inputdata.Size();i++) {
-        //     if (stoul(year) == inputdata[i].d.GetYear() && j == inputdata[i].d.Getmonth()) {
-        //         if (inputdata[i].solarrad > 100) {
-        //             total = total + inputdata[i].solarrad;
-        //             solarelements++;
-        //         }
-        //         if (inputdata[i].airtemp != 0) {
-        //             airtemparray.Add(inputdata[i].airtemp);   
-        //             airtempelements++;                 
-        //         }
-        //         if (inputdata[i].speed != 0) {
-        //             speedarray.Add(inputdata[i].speed); 
-        //             speedelements++;                   
-        //         }
-        //     }
-        // }
+        for (int i = 0; i< inputdata.Size();i++) {
+            if (stoul(year) == inputdata[i].d.GetYear() && j == inputdata[i].d.Getmonth()) {
+                if (inputdata[i].solarrad > 100) {
+                    total = total + inputdata[i].solarrad;
+                    solarelements++;
+                }
+                if (inputdata[i].airtemp != 0) {
+                    airtemparray.Add(inputdata[i].airtemp);   
+                    airtempelements++;                 
+                }
+                if (inputdata[i].speed != 0) {
+                    speedarray.Add(inputdata[i].speed); 
+                    speedelements++;                   
+                }
+            }
+        }
         total = total/6000;
         if (speedelements != 0 || airtempelements != 0 || solarelements != 0) {
             outfile << '\n'
@@ -390,6 +396,10 @@ void option4(LogType& inputdata) {
     }
     outfile.close();
     std::cout << "Data printed. Check WindTempSolar.csv for details."<< std::endl;
+}
+
+void option5(LogType& inputdata) {
+
 }
 
 void printyear(unsigned &value) {
