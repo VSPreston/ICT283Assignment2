@@ -29,7 +29,7 @@ float CalculateMean(const Vector<float>& array, int size);
 float CalculateSD(const Vector<float>& array, int size);
 void runtime();
 void option1(MAPtype& inputdata);
-void option2(LogType& inputdata);
+void option2(MAPtype& inputdata);
 void option3(LogType& inputdata);
 void option4(LogType& inputdata);
 void option5(LogType& inputdata);
@@ -39,7 +39,6 @@ bool operator>(const RecType &lhs,const RecType &rhs);
 bool operator<(const RecType &lhs,const RecType &rhs);
 bool operator==(const RecType &lhs,const RecType &rhs);
 void menu();
-void menu2();
 
 int main() {
     runtime();
@@ -176,9 +175,9 @@ void runtime() {
         int key = wind_data[i].d.GetYear()*100000000 + wind_data[i].d.Getmonth()*1000000 + wind_data[i].d.Getday()*10000 + wind_data[i].t.Gethour()*100 + wind_data[i].t.Getminute();
         MAPdata[key] = wind_data[i];
     }
-    for (int i = 0; i < wind_data.Size(); i++) {
-        BSTdata.insert(wind_data[i], printduplicate);
-    }
+    // for (int i = 0; i < wind_data.Size(); i++) {
+    //     BSTdata.insert(wind_data[i], printduplicate);
+    // }
 
     // std::cout << BSTdata.size() << " " << MAPdata.size() std::endl;
 
@@ -194,7 +193,7 @@ void runtime() {
                 option1(MAPdata);
                 break;
             case 2:
-                option2(wind_data);
+                option2(MAPdata);
                 break;
             case 3:
                 option3(wind_data);
@@ -253,13 +252,6 @@ void menu() {
     std::cout << "6: Exit" << std::endl;
 }
 
-void menu2() {
-    std::cout << "Enter your desired comparison [1,2,3]: " << std::endl;
-    std::cout << "1: Average and Standard deviation speed of specified month and year" << std::endl;
-    std::cout << "2: Average and Standard deviation ambient air temperature in each month for a specified year" << std::endl;
-    std::cout << "3: " << std::endl;
-}
-
 void option1(MAPtype& inputdata) {
     std::cout << "Enter month and year : ";
     std::string month, year;
@@ -270,9 +262,8 @@ void option1(MAPtype& inputdata) {
     Vector<float> speedarray;
     int elements = 0;
     Date tempdate;
-
-    auto itr = inputdata.begin();
-    for (itr; itr != inputdata.end();itr++) {
+    
+    for (auto itr = inputdata.begin(); itr != inputdata.end();itr++) {
         if (stoul(month) == itr->second.d.Getmonth() && stoul(year) == itr->second.d.GetYear()) {
             if (itr->second.speed != 0) {
                 speedarray.Add(itr->second.speed);
@@ -294,7 +285,7 @@ void option1(MAPtype& inputdata) {
 
 }
 
-void option2(LogType& inputdata) {
+void option2(MAPtype& inputdata) {
     std::cout << "Enter year :";
     std::string year;
     std::cin >> year;
@@ -306,10 +297,11 @@ void option2(LogType& inputdata) {
         float sd = 0;
         Vector<float> airtemparray = Vector<float>(31);
         int elements = 0;
-        for (int i = 0; i< inputdata.Size();i++) {
-            if (stoul(year) == inputdata[i].d.GetYear() && j == inputdata[i].d.Getmonth()) {
-                if (inputdata[i].airtemp != 0) {
-                    airtemparray.Add(inputdata[i].airtemp);
+
+        for (auto itr = inputdata.begin(); itr != inputdata.end() ;itr++) {
+            if (stoul(year) == itr->second.d.GetYear() && j == itr->second.d.Getmonth()) {
+                if (itr->second.airtemp != 0) {
+                    airtemparray.Add(itr->second.airtemp);
                     elements++;
                 }
             }
@@ -330,11 +322,9 @@ void option2(LogType& inputdata) {
 
 void option3(LogType& inputdata) { //sPRR thing calculation
     std::cout << "Enter month:";
+    int month;
+    std::cin >> month;
 
-    bool choice = true;
-    while (choice) {
-
-    }
 
 }
 
