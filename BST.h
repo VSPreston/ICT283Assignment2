@@ -78,11 +78,6 @@ public:
     /// @return The total number of elements in the BST.
     int size();
 
-    /// @brief Returns the info that was searched up.
-    /// @param searchitem the item to be searched. 
-    /// @return Node info. 
-    elemType findinfo(const elemType& searchitem) const;
-
 protected:
     /// Pointer to the root node of the BST.
     node<elemType> *root;
@@ -274,22 +269,6 @@ bool BST<elemType>::search (const elemType& searchItem) const {
     }//end else
     return found;
 }//end search
-
-template <class elemType>
-elemType BST<elemType>::findinfo(const elemType& searchItem) const {
-    node<elemType>* current = root;
-
-    while (current != nullptr) {
-        if (current->info == searchItem) {
-            return current->info; // Return the info of the found node
-        } else if (current->info > searchItem) {
-            current = current->lLink; // Move to the left child
-        } else {
-            current = current->rLink; // Move to the right child
-        }
-    }
-    throw std::runtime_error("Item not found in the tree");
-}
 
 template <class elemType>
 void BST<elemType>::insert(const elemType& insertItem, void (*duplicates) ()) {
