@@ -9,7 +9,6 @@
 #include <iostream>
 #include <cmath>
 #include <map>
-#include <unordered_map>
 
 // Compiler command:
 // g++ -Wall -g -std=c++11 -ftime-report main.cpp Time.cpp Date.cpp -o main
@@ -22,12 +21,25 @@ typedef struct {
     float airtemp;
 }RecType;
 
+class TotalValueHelper {
+public:
+    static Vector<float> tVspeed;
+    static Vector<float> tVairtemp;
+    static Vector<float> tVsolarrad;
+
+    static void addValue(RecType& node);
+};
+Vector<float> TotalValueHelper::tVspeed;
+Vector<float> TotalValueHelper::tVairtemp;
+Vector<float> TotalValueHelper::tVsolarrad;
+
 typedef Vector<RecType> LogType;
 typedef std::map<unsigned, RecType> MAPtype;
-// typedef BST<RecType> BSTtype;
-
-float CalculateMean(const Vector<float>& array, int size);
-float CalculateSD(const Vector<float>& array, int size);
+typedef BST<RecType> BSTtype;
+typedef void (*f)(RecType&);
+float CalculateMean(const Vector<float>& array);
+float CalculateSD(const Vector<float>& array);
+float sPCC(const Vector<float>& vec1, const Vector<float>& vec2);
 void runtime();
 void option1(MAPtype& inputdata);
 void option2(MAPtype& inputdata);
@@ -41,6 +53,8 @@ bool operator<(const RecType &lhs,const RecType &rhs);
 bool operator==(const RecType &lhs,const RecType &rhs);
 void menu();
 
+
+
 int main() {
     runtime();
     return 0;
@@ -49,7 +63,6 @@ int main() {
 void runtime() {
     std::string filename;
     LogType wind_data;
-    // BSTtype BSTdata;
     MAPtype MAPdata;
     std::ifstream inputFile("data/data_source.txt");
 
@@ -137,7 +150,7 @@ void runtime() {
                     thing >> tempdate
                     >> temptime;
                 } else if (columncount == speedpostion && dataline != "") {
-                    tempspeed = stof(dataline);
+                    tempspeed = stof(dataline)*3.6;
                 } else if (columncount == solarradposition && dataline != "") {
                     tempsr = stof(dataline);
                 } else if (columncount == airtempposition && dataline != "") {
@@ -171,26 +184,12 @@ void runtime() {
     }
 
     wind_data.Shuffle();
-
     for (int i = 0; i < wind_data.Size(); i++) {
         int key = wind_data[i].d.GetYear()*100000000 + wind_data[i].d.Getmonth()*1000000 + wind_data[i].d.Getday()*10000 + wind_data[i].t.Gethour()*100 + wind_data[i].t.Getminute();
         MAPdata[key] = wind_data[i];
     }
-    wind_data.Clear();
 
-    //bst data thingy here
-    for (int i =0; i < 11;i++) {
-        LogType newlog;
-        for (auto itr = MAPdata.begin();itr != MAPdata.end();itr++) {
-            if (itr->second.d.Getmonth() == i) {
-                
-            }
-            //add to bst here for the love of god 
-        }
-    }
-
-    // std::cout << BSTdata.size() << " " << MAPdata.size() std::endl;
-
+    // std::cout  << MAPdata.size() << std::endl;
 
     // Assignment1: Menu options time
     bool choice = true;
@@ -223,33 +222,35 @@ void runtime() {
                 break;
         }
     }
-
+    MAPdata.clear();
+    wind_data.Clear();
     // outfile.close();
 
  
     // std::cout << "Data Cleared." <<std::endl;
 }
 
-float CalculateMean(const Vector<float>& array, int size) {
-    float sum =0;
-    for (int i = 0;i< size ; i++) {
+float CalculateMean(const Vector<float>& array) {
+    float sum = 0.0 ;
+    for (int i = 0; i< array.Size() ; i++) {
         // add to sum
         sum += array[i];
     }
-    sum = sum / size;
-    return sum;
+    return sum / array.Size();
 }
 
-float CalculateSD(const Vector<float>& array, int size) {
+float CalculateSD(const Vector<float>& array) {
 
-    float mean = CalculateMean(array, size);
+    float mean = CalculateMean(array);
     float sd = 0.0;
 
-    for (int i = 0; i < size; i++) {
-        sd += pow((array[i] - mean),2);
+    for (int i = 0; i < array.Size(); i++) {
+        sd += ((array[i] - mean) * (array[i] - mean));
     }
+
+    sd = sd/ (array.Size()-1);
     
-    return sqrt (sd/(size-1));
+    return std::sqrt(sd);
 }
 
 void menu() {
@@ -275,18 +276,20 @@ void option1(MAPtype& inputdata) {
     
     for (auto itr = inputdata.begin(); itr != inputdata.end();itr++) {
         if (stoul(month) == itr->second.d.Getmonth() && stoul(year) == itr->second.d.GetYear()) {
-            if (itr->second.speed != 0) {
+            if (itr->first != 0) {
                 speedarray.Add(itr->second.speed);
                 elements++;
             }
         }
     }
 
+    // std::cout << speedarray.Size() << std::endl;
+
     if (elements == 0) {    
         std::cout << tempdate.Getmonthname(stoul(month)) << " " << year << ":" << "No data" << std::endl; 
     } else {
-        average = CalculateMean(speedarray, elements) *3.6;
-        sd = CalculateSD(speedarray, elements);
+        average = CalculateMean(speedarray);
+        sd = CalculateSD(speedarray);
 
         std::cout << tempdate.Getmonthname(stoul(month)) << " " << year << ":" << '\n' 
         << "Average speed: " << std::fixed << std::setprecision(1) << average << " km/h" << '\n'
@@ -305,24 +308,25 @@ void option2(MAPtype& inputdata) {
     for (unsigned j = 1; j <= 12;j++) {
         float average = 0;
         float sd = 0;
-        Vector<float> airtemparray = Vector<float>(31);
+        Vector<float> airtemparray;
         int elements = 0;
 
         for (auto itr = inputdata.begin(); itr != inputdata.end() ;itr++) {
             if (stoul(year) == itr->second.d.GetYear() && j == itr->second.d.Getmonth()) {
-                if (itr->second.airtemp != 0) {
+                if (itr->first != 0) {
                     airtemparray.Add(itr->second.airtemp);
                     elements++;
                 }
             }
         }
-        average = CalculateMean(airtemparray, elements);
-        sd = CalculateSD(airtemparray, elements);
+        average = CalculateMean(airtemparray);
+        sd = CalculateSD(airtemparray);
 
         std::cout << '\n' 
         << tempdate.Getmonthname(j) << ":";
         if (elements != 0) {
-            std::cout << "Average: " << std::fixed << std::setprecision(1) << average << " degrees C, stdev: " << std::fixed << std::setprecision(2) << sd;
+            std::cout << "Average: " << std::fixed << std::setprecision(1) << average;
+            std::cout << " degrees C, stdev: " << std::fixed << std::setprecision(2) << sd;
         } else {
             std::cout << "No data";
         }
@@ -332,10 +336,59 @@ void option2(MAPtype& inputdata) {
 
 void option3(LogType& inputdata) { //sPRR thing calculation
     std::cout << "Enter month:";
-    int month;
+    unsigned month;
     std::cin >> month;
+    BSTtype bstlog;
 
+    if (month < 1 || month > 12) { //check for valid month
+        std::cout << "Invalid month!" << std::endl;
+        return;
+    }
 
+    for (int i =0; i< inputdata.Size();i++) {
+        if (inputdata[i].d.Getmonth() == month) {
+            bstlog.insert(inputdata[i],printduplicate);
+        }
+    }
+
+    if (bstlog.size() == 0) { //check for any data in specified month
+        std::cout << "No data found on selected month" << std::endl;
+        return;
+    }
+
+    // std::cout << newlog.size() <<std::endl;
+
+    TotalValueHelper tvh;
+    //output sPRR for each 3 of the results.
+    //calls the inordertraversal to store data into the helper class.
+    bstlog.inorderTraversal(TotalValueHelper::addValue);
+    std::cout << "S_T: " << std::fixed << std::setprecision(2)<< sPCC(tvh.tVspeed, tvh.tVairtemp) <<std::endl;
+    std::cout << "S_R: " << std::fixed << std::setprecision(2)<< sPCC(tvh.tVspeed, tvh.tVsolarrad) <<std::endl;
+    std::cout << "T_R: " << std::fixed << std::setprecision(2)<< sPCC(tvh.tVsolarrad, tvh.tVairtemp) <<std::endl;
+
+}
+
+float sPCC(const Vector<float>& vec1, const Vector<float>& vec2) {
+    float meanX = CalculateMean(vec1);
+    float meanY = CalculateMean(vec2);
+    // std::cout << meanX <<std::endl;
+    // std::cout << meanY <<std::endl;
+
+    // Calculate standard deviations
+    float sdX = CalculateSD(vec1);
+    float sdY = CalculateSD(vec2);
+
+    // std::cout << sdX <<std::endl;
+    // std::cout << sdY <<std::endl;
+
+    float cov = 0;
+    for (int i = 0;i < vec1.Size(); ++i) {
+        cov += (vec1[i] - meanX) * (vec2[i] - meanY);
+    }
+    cov /= vec1.Size();
+
+    float correlation = cov / (sdX * sdY);
+    return correlation;
 }
 
 void option4(LogType& inputdata) {
@@ -378,11 +431,11 @@ void option4(LogType& inputdata) {
             outfile << '\n'
             << tempdate.Getmonthname(j) << ",";
             if (speedelements !=0) {
-                outfile << std::fixed << std::setprecision(1) << CalculateMean(speedarray,speedelements)*3.6 << "(" << CalculateSD(speedarray,speedelements) << ")";
+                outfile << std::fixed << std::setprecision(1) << CalculateMean(speedarray)*3.6 << "(" << CalculateSD(speedarray) << ")";
             }
             outfile <<",";
             if (airtempelements !=0) {
-                outfile << std::fixed << std::setprecision(1) << CalculateMean(airtemparray,airtempelements) << "(" << CalculateSD(airtemparray,airtempelements)<< ")";
+                outfile << std::fixed << std::setprecision(1) << CalculateMean(airtemparray) << "(" << CalculateSD(airtemparray)<< ")";
             }
             outfile <<",";
             if (solarelements != 0 ) {
@@ -399,6 +452,7 @@ void option4(LogType& inputdata) {
 }
 
 void option5(LogType& inputdata) {
+
 
 }
 
@@ -430,4 +484,10 @@ bool operator<(const RecType &lhs,const RecType &rhs) {
 
 bool operator==(const RecType &lhs,const RecType &rhs) {
     return lhs.d == rhs.d && lhs.t == rhs.t;
+}
+
+void TotalValueHelper::addValue(RecType& node) {
+    tVspeed.Add(node.speed);
+    tVairtemp.Add(node.airtemp);
+    tVsolarrad.Add(node.solarrad);
 }
