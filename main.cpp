@@ -41,6 +41,7 @@ float CalculateMean(const Vector<float>& array);
 float CalculateSD(const Vector<float>& array);
 float sPCC(const Vector<float>& vec1, const Vector<float>& vec2);
 void runtime();
+bool processors();
 void option1(MAPtype& inputdata);
 void option2(MAPtype& inputdata);
 void option3(LogType& inputdata);
@@ -52,14 +53,19 @@ bool operator<(const RecType &lhs,const RecType &rhs);
 bool operator==(const RecType &lhs,const RecType &rhs);
 void menu();
 
-
-
 int main() {
     runtime();
     return 0;
 }
 
 void runtime() {
+    bool checker = true;
+    do {
+        checker = processors();
+    } while (checker == true);
+}
+
+bool processors() {
     std::string filename;
     LogType wind_data;
     MAPtype MAPdata;
@@ -192,6 +198,7 @@ void runtime() {
 
     // Assignment1: Menu options time
     bool choice = true;
+    bool option5 = false;
     while (choice) {
         menu();
         int option;
@@ -210,12 +217,14 @@ void runtime() {
                 option4(wind_data); 
                 break;
             case 5:
+                option5 = true;
                 std::cout << "Restarting program..." << std::endl;
                 choice = false;
                 break;
             case 6:
                 std::cout << "Ending program..." << std::endl;
                 choice = false;
+                option5 = false;
                 break;
             default:
                 std::cout << "Invalid option" << std::endl;
@@ -225,9 +234,8 @@ void runtime() {
     MAPdata.clear();
     wind_data.Clear();
     // outfile.close();
-
- 
-    // std::cout << "Data Cleared." <<std::endl;
+    std::cout << "Data Cleared." <<std::endl;
+    return option5;
 }
 
 float CalculateMean(const Vector<float>& array) {
