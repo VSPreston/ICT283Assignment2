@@ -267,7 +267,7 @@ void menu() {
     std::cout << "2: Average and Standard deviation ambient air temperature in each month for a specified year" << std::endl;
     std::cout << "3: Pearson Correlation coefficient options" << std::endl;
     std::cout << "4: Average wind speed (km/h), average ambient air temperature and total solar radiation in kWh/m2 at a specified year. Output into WindTempSolar.csv." << std::endl;
-    std::cout << "5: UNFINISHED OPTION DO NOT USE" << std::endl;
+    std::cout << "5: Refresh program" << std::endl;
     std::cout << "6: Exit" << std::endl;
 }
 
