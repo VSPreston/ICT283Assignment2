@@ -45,7 +45,6 @@ void option1(MAPtype& inputdata);
 void option2(MAPtype& inputdata);
 void option3(LogType& inputdata);
 void option4(LogType& inputdata);
-void option5(LogType& inputdata);
 void printyear(unsigned &value);
 void printduplicate();
 bool operator>(const RecType &lhs,const RecType &rhs);
@@ -211,7 +210,8 @@ void runtime() {
                 option4(wind_data); 
                 break;
             case 5:
-                option5(wind_data);
+                std::cout << "Restarting program..." << std::endl;
+                choice = false;
                 break;
             case 6:
                 std::cout << "Ending program..." << std::endl;
@@ -366,6 +366,7 @@ void option3(LogType& inputdata) { //sPRR thing calculation
     std::cout << "S_R: " << std::fixed << std::setprecision(2)<< sPCC(tvh.tVspeed, tvh.tVsolarrad) <<std::endl;
     std::cout << "T_R: " << std::fixed << std::setprecision(2)<< sPCC(tvh.tVsolarrad, tvh.tVairtemp) <<std::endl;
 
+    bstlog.destroyTree();
 }
 
 float sPCC(const Vector<float>& vec1, const Vector<float>& vec2) {
@@ -449,11 +450,6 @@ void option4(LogType& inputdata) {
     }
     outfile.close();
     std::cout << "Data printed. Check WindTempSolar.csv for details."<< std::endl;
-}
-
-void option5(LogType& inputdata) {
-
-
 }
 
 void printyear(unsigned &value) {
