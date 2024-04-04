@@ -45,7 +45,7 @@ class Vector {
          *
          * @return The number of elements in the vector.
          */
-        int Size();
+        int Size() const;
 
         /**
          * @brief Add an element to the end of the vector.
@@ -155,7 +155,7 @@ Vector<T>::Vector(int n) {
 }
 
 template <class T>
-int Vector<T>::Size() {
+int Vector<T>::Size() const {
     return m_array.size();
 }
 
