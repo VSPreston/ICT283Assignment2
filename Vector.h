@@ -146,7 +146,7 @@ class Vector {
 
 template <class T>
 Vector<T>::Vector() {
-    m_array = std::vector<T>(10);
+    m_array = std::vector<T>();
 }
 
 template <class T>
