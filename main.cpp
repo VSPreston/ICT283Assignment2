@@ -262,7 +262,7 @@ float CalculateSD(const Vector<float>& array) {
 }
 
 void menu() {
-    std::cout << "Enter your desired option [1,2,3,4,5]: " << std::endl;
+    std::cout << "Enter your desired option [1,2,3,4,5,6]: " << std::endl;
     std::cout << "1: Average and Standard deviation speed of specified month and year" << std::endl;
     std::cout << "2: Average and Standard deviation ambient air temperature in each month for a specified year" << std::endl;
     std::cout << "3: Pearson Correlation coefficient options" << std::endl;
