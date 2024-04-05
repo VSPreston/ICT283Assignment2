@@ -1,0 +1,15 @@
+<map id="operator&gt;&gt;" name="operator&gt;&gt;">
+<area shape="rect" id="Node000001" title="Overloaded input stream extraction operator for the Time class." alt="" coords="5,132,90,159"/>
+<area shape="rect" id="Node000002" href="$class_time.html#a406512173cc8185d79104cc3072d45b4" title="Formats the minutes to a 2 digit string for display." alt="" coords="138,5,282,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,130,88,87,110,63,136,42,144,37,147,41,139,46,114,67,92,90,60,133"/>
+<area shape="rect" id="Node000003" href="$class_time.html#a6ee3f57a2b0837b766c983fa8b10970f" title="Getter function for the hour of the day." alt="" coords="158,56,262,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="69,129,136,92,150,86,153,91,139,97,72,134"/>
+<area shape="rect" id="Node000004" href="$class_time.html#ae823f0c92e64e945ece6cad2fb7b41df" title="Getter function for the minutes in a day." alt="" coords="151,107,269,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="90,136,135,129,136,134,90,141"/>
+<area shape="rect" id="Node000005" href="$class_time.html#ae817f31b0675bfb6648f3ccb1adf61e3" title="Setter function for the full time string." alt="" coords="147,157,273,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="90,149,132,156,131,161,90,154"/>
+<area shape="rect" id="Node000006" href="$class_time.html#ae5d6997b01ce51c88d641ecfb5af5fd8" title="Set the hour of the day." alt="" coords="159,208,261,235"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="72,157,139,194,153,199,150,204,136,198,69,161"/>
+<area shape="rect" id="Node000007" href="$class_time.html#a51c53a1644e42d7ee44d077ac41aac93" title="Setter function for minutes." alt="" coords="152,259,268,285"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="60,158,92,200,114,224,139,244,147,249,144,254,136,249,110,228,88,204,55,161"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="TotalValueHelper" name="TotalValueHelper">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,859,116,928"/>
+<area shape="rect" id="Node000002" href="$class_vector.html" title=" " alt="" coords="11,416,110,763"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,762,63,842,58,842,58,762"/>
+<area shape="rect" id="Node000003" href="$class_vector.html" title="Manages an encapsulated STL vector within the class of Vector." alt="" coords="17,5,104,352"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="63,367,63,416,58,416,58,367"/>
+</map>

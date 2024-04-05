@@ -1,0 +1,9 @@
+<map id="operator==" name="operator==">
+<area shape="rect" id="Node000001" title="Overloaded input stream extraction operator for the Date class." alt="" coords="5,56,90,83"/>
+<area shape="rect" id="Node000002" href="$class_date.html#a3ea26ca1d75068608081aeccedd50c0a" title="Getter function for a day in a date." alt="" coords="145,5,244,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,53,138,35,140,40,89,58"/>
+<area shape="rect" id="Node000003" href="$class_date.html#aaa2ac517126d913d7d3b28773d9d0ec0" title="Getter function for the month in a date." alt="" coords="138,56,251,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,67,122,67,122,72,90,72"/>
+<area shape="rect" id="Node000004" href="$class_date.html#ad3519b229e188cca67c764352929ea83" title="Getter function for the year in a date." alt="" coords="142,107,247,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="89,81,140,99,138,104,88,86"/>
+</map>

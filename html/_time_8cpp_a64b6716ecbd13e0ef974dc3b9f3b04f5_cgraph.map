@@ -1,0 +1,9 @@
+<map id="operator&lt;&lt;" name="operator&lt;&lt;">
+<area shape="rect" id="Node000001" title="Overloaded output stream insertion operator for the Time class." alt="" coords="5,56,90,83"/>
+<area shape="rect" id="Node000002" href="$class_time.html#a406512173cc8185d79104cc3072d45b4" title="Formats the minutes to a 2 digit string for display." alt="" coords="138,5,282,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,54,150,35,151,40,91,59"/>
+<area shape="rect" id="Node000003" href="$class_time.html#a6ee3f57a2b0837b766c983fa8b10970f" title="Getter function for the hour of the day." alt="" coords="158,56,262,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,67,143,67,143,72,90,72"/>
+<area shape="rect" id="Node000004" href="$class_time.html#ae823f0c92e64e945ece6cad2fb7b41df" title="Getter function for the minutes in a day." alt="" coords="151,107,269,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="91,80,151,99,150,104,89,85"/>
+</map>

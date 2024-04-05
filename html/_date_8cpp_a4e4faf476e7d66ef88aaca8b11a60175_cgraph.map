@@ -1,0 +1,9 @@
+<map id="operator&gt;" name="operator&gt;">
+<area shape="rect" id="Node000001" title="Overloaded greater than operator for the Date class." alt="" coords="5,56,82,83"/>
+<area shape="rect" id="Node000002" href="$class_date.html#a3ea26ca1d75068608081aeccedd50c0a" title="Getter function for a day in a date." alt="" coords="137,5,236,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,53,131,35,133,40,83,58"/>
+<area shape="rect" id="Node000003" href="$class_date.html#aaa2ac517126d913d7d3b28773d9d0ec0" title="Getter function for the month in a date." alt="" coords="130,56,243,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="82,67,114,67,114,72,82,72"/>
+<area shape="rect" id="Node000004" href="$class_date.html#ad3519b229e188cca67c764352929ea83" title="Getter function for the year in a date." alt="" coords="134,107,239,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="83,80,133,98,131,103,81,85"/>
+</map>

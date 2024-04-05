@@ -1,0 +1,7 @@
+<map id="RecType" name="RecType">
+<area shape="rect" id="Node000001" title=" " alt="" coords="103,352,172,464"/>
+<area shape="rect" id="Node000002" href="$class_date.html" title="A class representing a date." alt="" coords="5,5,125,288"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,287,120,335,115,337,102,289"/>
+<area shape="rect" id="Node000003" href="$class_time.html" title="A class representing time of day." alt="" coords="150,27,269,267"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,267,160,337,154,335,174,266"/>
+</map>

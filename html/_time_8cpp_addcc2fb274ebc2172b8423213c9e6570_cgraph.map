@@ -1,0 +1,7 @@
+<map id="operator&gt;" name="operator&gt;">
+<area shape="rect" id="Node000001" title="Overloaded lesser than operator for the Date class." alt="" coords="5,31,82,57"/>
+<area shape="rect" id="Node000002" href="$class_time.html#a6ee3f57a2b0837b766c983fa8b10970f" title="Getter function for the hour of the day." alt="" coords="137,5,240,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,35,121,28,122,33,83,40"/>
+<area shape="rect" id="Node000003" href="$class_time.html#ae823f0c92e64e945ece6cad2fb7b41df" title="Getter function for the minutes in a day." alt="" coords="130,56,247,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="83,48,115,54,114,59,82,53"/>
+</map>
