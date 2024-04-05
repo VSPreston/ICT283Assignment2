@@ -16,12 +16,14 @@ Each functionality is described in point form, where a working functionality is 
 + Program can detect time out of scope. (e.g 25:60)
 + Program is able to jump over blank rows of data. 
 + Program handles most of the output.
++ Program can run options 1 to 5 with confidence.
++ Program makes sure the heap is cleared when running option 5.
 + Program can run at higher C++ versions (tested with c++17)
 
 - Program cannot read a date format outside of DD/MM/YYYY
 - Program does not feedback when there is no data in file. 
 - Program does not calculate average or standard deviation in the class itself.
-- RecType struct has public elements, failing Law of Demeter. 
+- RecType and TotalValueHelper classes has public accessible elements, failing Law of Demeter. 
 - Program does not check for valid dates, for example if there exists a 30th of Febuary, or leap years
-- Program calculations may be inaccurate if there is too many 0 values in the data.
+
 

@@ -54,8 +54,7 @@ void Date::SetDay(unsigned day) {
 
 void Date::SetMonth(unsigned month) {
     if (month<1 || month>12) {
-        std::cout << "Invalid month detected. Please check the data again." << std::endl;
-        exit(-1);
+        std::cerr << "Invalid month detected. Please check the data again.";
     } else {
         m_month = month;
     }
