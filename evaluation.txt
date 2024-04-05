@@ -28,5 +28,6 @@ Each functionality is described in point form, where a working functionality is 
 - RecType and TotalValueHelper classes has public accessible elements, failing Law of Demeter. 
 - Program does not check for valid dates, for example if there exists a 30th of Febuary, or leap years
 - Option 5 was not tested. There are test plans available to run, however they were not checked if they succeeded or not. 
+- Program will not detect if data/data_source.txt has no content, and continues as usual. 
 
 
