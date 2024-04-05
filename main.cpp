@@ -23,7 +23,7 @@ typedef struct {
 
 class TotalValueHelper {
 public:
-    static Vector<float> tVspeed;
+    static Vector<float> tVspeed; 
     static Vector<float> tVairtemp;
     static Vector<float> tVsolarrad;
 
@@ -375,6 +375,9 @@ void option3(LogType& inputdata) { //sPRR thing calculation
     std::cout << "T_R: " << std::fixed << std::setprecision(2)<< sPCC(tvh.tVsolarrad, tvh.tVairtemp) <<std::endl;
 
     bstlog.destroyTree();
+    tvh.tVspeed.Clear();
+    tvh.tVairtemp.Clear();
+    tvh.tVsolarrad.Clear();
 }
 
 float sPCC(const Vector<float>& vec1, const Vector<float>& vec2) {
