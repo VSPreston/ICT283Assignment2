@@ -1,7 +1,0 @@
-<map id="option3" name="option3">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,69,57"/>
-<area shape="rect" id="Node000002" href="$class_vector.html#a8fe0e49a7ffed77fd569624338af8750" title="Get the current size of the vector." alt="" coords="123,5,216,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,35,107,28,108,33,70,41"/>
-<area shape="rect" id="Node000003" href="$class_vector.html#a39d6069675db4ecfc1ab81d440da759a" title="Default constructor." alt="" coords="117,56,222,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="70,47,102,54,101,59,69,53"/>
-</map>
