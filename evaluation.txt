@@ -2,22 +2,24 @@ By: Wong Liang Jun
 Student ID: 35059404
 Unit: ICT283
 
-This is a summary of the Assignment 1 tests, rationale and design choices made during the creation of this program.
+The program was checked for malware using Windows Defender to scan all files before submission.
+
+This is a summary of the Assignment 2 tests, rationale and design choices made during the creation of this program.
 The summary will contain what the program is able to offer, unfixed bugs within the program and failings of the program.
 As this was a continuation of Lab 5 exercise 5, previous test were ran for simple file streams and output, which will be included.
 Each functionality is described in point form, where a working functionality is shown as a '+' and a non-working functionality is a '-'.
 
-+ Program is able to take in a .csv file of any name.
-+ Program can read where each specified header is, and the following data. 
++ Program is able to take in multiple files using the ".csv" extension. 
++ Program can read where each specified header is, and the following data in each file.
 + Program can handle multiple rows of data in the .csv file specified.
 + Program can read where each header is dynamically, if it was in a different column.
 + Program is able to handle errors related to missing files.
 + Program can detect day or month out of scope.(e.g 32/13/2000)
 + Program can detect time out of scope. (e.g 25:60)
 + Program is able to jump over blank rows of data. 
-+ Program handles most of the output.
 + Program can run options 1 to 5 with confidence.
 + Program makes sure the heap is cleared when running option 5.
++ Program checks for duplicates through all files given.
 + Program can run at higher C++ versions (tested with c++17)
 
 - Program cannot read a date format outside of DD/MM/YYYY
@@ -25,5 +27,6 @@ Each functionality is described in point form, where a working functionality is 
 - Program does not calculate average or standard deviation in the class itself.
 - RecType and TotalValueHelper classes has public accessible elements, failing Law of Demeter. 
 - Program does not check for valid dates, for example if there exists a 30th of Febuary, or leap years
+- Option 5 was not tested. There are test plans available to run, however they were not checked if they succeeded or not. 
 
 
