@@ -105,7 +105,7 @@ class Time {
         /// @brief Formats the minutes to a 2 digit string for display. 
         /// @return the minute variable in a string format of 2 digits.
         /// @param minute A referenced minute to convert. 
-        std::string FormatMinutes(const unsigned& minute);
+        std::string FormatMinutes(const unsigned& minute) const;
 
         //TODO change from 24h to 12h time somewhere here
 

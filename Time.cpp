@@ -27,29 +27,33 @@ std::string Time::GetFullTime() const {
 void Time::Sethour(unsigned hour) {
     if (hour > 23) {
         std::cerr << "Hour input wrong!";
+    } else {
+        m_hour = hour;
     }
-    m_hour = hour;
+
 }
 
 void Time::Setminute(unsigned minute) {
     if (minute > 59) {
         std::cerr << "Minute input wrong!";
+    } else {
+        m_minute = minute;
     }
-    m_minute = minute;
+
 }
 
 void Time::SetFullTime(const std::string& fulltime) {
     m_FullTime = fulltime;
 }
 
-std::string Time::FormatMinutes(const unsigned& minute) {
+std::string Time::FormatMinutes(const unsigned& minute) const {
     std::stringstream ss;
     ss << std::setw(2) << std::setfill('0') << minute;
     return ss.str();
 }
 
 std::ostream & operator <<( std::ostream & os, const Time & time ) { // this is for output 
-    os << " Time: " << time.GetFullTime();
+    os << " Time: " << time.Gethour() << ":" << time.FormatMinutes(time.Getminute());
     return os;
 }
 
